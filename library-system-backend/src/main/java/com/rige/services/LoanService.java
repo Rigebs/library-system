@@ -1,17 +1,13 @@
 package com.rige.services;
 
-import com.rige.entities.LoanEntity;
+import com.rige.dto.request.LoanRequest;
+import com.rige.dto.response.LoanResponse;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface LoanService {
-
-    List<LoanEntity> findAllLoans();
-
-    Optional<LoanEntity> findLoanById(Long id);
-
-    LoanEntity createLoan(Long userId, Long bookId, int loanDays);
-
-    LoanEntity returnLoan(Long loanId);
+    List<LoanResponse> findAllLoans();
+    LoanResponse findLoanById(Long id);
+    LoanResponse createLoan(LoanRequest request);
+    LoanResponse returnLoan(Long loanId);
 }

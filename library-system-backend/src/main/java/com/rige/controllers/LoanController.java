@@ -1,6 +1,8 @@
 package com.rige.controllers;
 
-import com.rige.entities.LoanEntity;
+import com.rige.dto.request.LoanRequest;
+import com.rige.dto.response.ApiResponse;
+import com.rige.dto.response.LoanResponse;
 import com.rige.services.LoanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -8,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/loans")
@@ -18,32 +19,41 @@ public class LoanController {
     private final LoanService loanService;
 
     @GetMapping
-    public List<LoanEntity> getAllLoans() {
-        return loanService.findAllLoans();
+    public ResponseEntity<ApiResponse<List<LoanResponse>>> getAllLoans() {
+        List<LoanResponse> loans = loanService.findAllLoans();
+        return ResponseEntity.ok(
+                ApiResponse.success(loans, "Loan list retrieved successfully")
+        );
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createLoan(@RequestBody Map<String, Long> requestBody) {
-
-        Long userId = requestBody.get("userId");
-        Long bookId = requestBody.get("bookId");
-        int loanDays = 7;
-
+    public ResponseEntity<ApiResponse<LoanResponse>> createLoan(@RequestBody LoanRequest request) {
         try {
-            LoanEntity newLoan = loanService.createLoan(userId, bookId, loanDays);
-            return new ResponseEntity<>(newLoan, HttpStatus.CREATED);
+            LoanResponse newLoan = loanService.createLoan(request);
+            return new ResponseEntity<>(
+                    ApiResponse.success(newLoan, "Loan created successfully"),
+                    HttpStatus.CREATED
+            );
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            return new ResponseEntity<>(
+                    ApiResponse.error("Failed to create loan: " + e.getMessage()),
+                    HttpStatus.BAD_REQUEST
+            );
         }
     }
 
     @PutMapping("/{id}/return")
-    public ResponseEntity<?> returnLoan(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<LoanResponse>> returnLoan(@PathVariable Long id) {
         try {
-            LoanEntity returnedLoan = loanService.returnLoan(id);
-            return ResponseEntity.ok(returnedLoan);
+            LoanResponse returnedLoan = loanService.returnLoan(id);
+            return ResponseEntity.ok(
+                    ApiResponse.success(returnedLoan, "Loan returned successfully")
+            );
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+            return new ResponseEntity<>(
+                    ApiResponse.error("Failed to return loan: " + e.getMessage()),
+                    HttpStatus.NOT_FOUND
+            );
         }
     }
 }

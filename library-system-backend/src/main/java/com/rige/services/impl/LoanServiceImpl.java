@@ -1,9 +1,12 @@
 package com.rige.services.impl;
 
+import com.rige.dto.request.LoanRequest;
+import com.rige.dto.response.LoanResponse;
 import com.rige.entities.BookEntity;
 import com.rige.entities.LoanEntity;
 import com.rige.entities.UserEntity;
 import com.rige.enums.LoanStatus;
+import com.rige.mappers.LoanMapper;
 import com.rige.repositories.BookRepository;
 import com.rige.repositories.LoanRepository;
 import com.rige.repositories.UserRepository;
@@ -14,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -23,28 +26,32 @@ public class LoanServiceImpl implements LoanService {
     private final LoanRepository loanRepository;
     private final UserRepository userRepository;
     private final BookRepository bookRepository;
+    private final LoanMapper loanMapper;
 
     @Override
-    public List<LoanEntity> findAllLoans() {
-        return loanRepository.findAll();
+    public List<LoanResponse> findAllLoans() {
+        return loanRepository.findAll().stream()
+                .map(loanMapper::toResponse)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Optional<LoanEntity> findLoanById(Long id) {
-        return loanRepository.findById(id);
+    public LoanResponse findLoanById(Long id) {
+        LoanEntity loan = loanRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Loan not found"));
+        return loanMapper.toResponse(loan);
     }
 
     @Override
     @Transactional
-    public LoanEntity createLoan(Long userId, Long bookId, int loanDays) {
-        UserEntity user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found")); 
+    public LoanResponse createLoan(LoanRequest request) {
+        UserEntity user = userRepository.findById(request.userId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
-        BookEntity book = bookRepository.findById(bookId)
-                .orElseThrow(() -> new RuntimeException("Book not found")); 
+        BookEntity book = bookRepository.findById(request.bookId())
+                .orElseThrow(() -> new RuntimeException("Book not found"));
 
-        long activeLoans = loanRepository.findByBookIdAndStatus(bookId, LoanStatus.ACTIVE).size();
-
+        long activeLoans = loanRepository.findByBookIdAndStatus(request.bookId(), LoanStatus.ACTIVE).size();
         if (activeLoans >= book.getTotalQuantity()) {
             throw new RuntimeException("No copies available for loan.");
         }
@@ -53,15 +60,16 @@ public class LoanServiceImpl implements LoanService {
         newLoan.setUser(user);
         newLoan.setBook(book);
         newLoan.setLoanDate(LocalDateTime.now());
-        newLoan.setExpectedReturnDate(LocalDateTime.now().plusDays(loanDays));
+        newLoan.setExpectedReturnDate(LocalDateTime.now().plusDays(request.loanDays()));
         newLoan.setStatus(LoanStatus.ACTIVE);
 
-        return loanRepository.save(newLoan);
+        LoanEntity savedLoan = loanRepository.save(newLoan);
+        return loanMapper.toResponse(savedLoan);
     }
 
     @Override
     @Transactional
-    public LoanEntity returnLoan(Long loanId) {
+    public LoanResponse returnLoan(Long loanId) {
         LoanEntity loan = loanRepository.findById(loanId)
                 .orElseThrow(() -> new RuntimeException("Loan not found"));
 
@@ -72,6 +80,7 @@ public class LoanServiceImpl implements LoanService {
         loan.setActualReturnDate(LocalDateTime.now());
         loan.setStatus(LoanStatus.RETURNED);
 
-        return loanRepository.save(loan);
+        LoanEntity returnedLoan = loanRepository.save(loan);
+        return loanMapper.toResponse(returnedLoan);
     }
 }
