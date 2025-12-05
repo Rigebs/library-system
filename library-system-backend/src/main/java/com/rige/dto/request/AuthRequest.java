@@ -1,7 +1,6 @@
 package com.rige.dto.request;
 
-public record UserRequest(
-    String name,
+public record AuthRequest(
     String email,
     String password
 ) {}

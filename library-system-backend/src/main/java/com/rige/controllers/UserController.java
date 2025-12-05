@@ -1,6 +1,7 @@
 package com.rige.controllers;
 
-import com.rige.entities.UserEntity;
+import com.rige.dto.response.ApiResponse;
+import com.rige.dto.response.UserResponse;
 import com.rige.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,29 +18,41 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public List<UserEntity> getAllUsers() {
-        return userService.findAllUsers();
+    public ResponseEntity<ApiResponse<List<UserResponse>>> getAllUsers() {
+        List<UserResponse> users = userService.findAllUsers();
+        return ResponseEntity.ok(
+                ApiResponse.success(users, "Users retrieved successfully")
+        );
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserEntity> getUserById(@PathVariable Long id) {
-        return userService.findUserById(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
-    @PostMapping
-    public ResponseEntity<UserEntity> createUser(@RequestBody UserEntity user) {
-        UserEntity savedUser = userService.saveUser(user);
-        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+    public ResponseEntity<ApiResponse<UserResponse>> getUserById(@PathVariable Long id) {
+        try {
+            UserResponse response = userService.findUserById(id);
+            return ResponseEntity.ok(
+                    ApiResponse.success(response, "User found")
+            );
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(
+                    ApiResponse.error(e.getMessage()),
+                    HttpStatus.NOT_FOUND
+            );
+        }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-        if (userService.findUserById(id).isPresent()) {
+    public ResponseEntity<ApiResponse<Void>> deleteUser(@PathVariable Long id) {
+        try {
             userService.deleteUser(id);
-            return ResponseEntity.noContent().build();
+            return new ResponseEntity<>(
+                    ApiResponse.success(null, "User deleted successfully"),
+                    HttpStatus.NO_CONTENT
+            );
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(
+                    ApiResponse.error(e.getMessage()),
+                    HttpStatus.NOT_FOUND
+            );
         }
-        return ResponseEntity.notFound().build();
     }
 }

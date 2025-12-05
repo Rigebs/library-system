@@ -1,19 +1,14 @@
 package com.rige.services;
 
-import com.rige.entities.UserEntity;
+import com.rige.dto.response.UserResponse;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface UserService {
-    
-    List<UserEntity> findAllUsers();
-    
-    Optional<UserEntity> findUserById(Long id);
-    
-    UserEntity findUserByEmail(String email);
-    
-    UserEntity saveUser(UserEntity user);
-    
+
+    List<UserResponse> findAllUsers();
+
+    UserResponse findUserById(Long id);
+
     void deleteUser(Long id);
 }

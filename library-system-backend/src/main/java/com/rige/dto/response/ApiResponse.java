@@ -1,7 +1,5 @@
 package com.rige.dto.response;
 
-import org.springframework.http.HttpStatus;
-
 public record ApiResponse<T>(
     boolean success,
     String message,
