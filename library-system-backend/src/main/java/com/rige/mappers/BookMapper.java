@@ -1,5 +1,7 @@
 package com.rige.mappers;
 
+import com.rige.dto.request.BookRequest;
+import com.rige.dto.response.BookResponse;
 import com.rige.entities.BookEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

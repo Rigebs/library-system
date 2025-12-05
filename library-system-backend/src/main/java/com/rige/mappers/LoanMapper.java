@@ -1,5 +1,6 @@
 package com.rige.mappers;
 
+import com.rige.dto.response.LoanResponse;
 import com.rige.entities.LoanEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
