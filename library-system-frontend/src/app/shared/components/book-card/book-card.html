@@ -1,0 +1,12 @@
+<article class="book-card" [routerLink]="getBookDetailRoute(book().id)">
+    <div class="card-image-container">
+        <img [src]="book().coverUrl" [alt]="'Carátula de ' + book().title" [width]="IMAGE_WIDTH" [height]="IMAGE_HEIGHT"
+            class="book-cover" />
+    </div>
+
+    <div class="card-content">
+        <h3 class="book-title">{{ book().title }}</h3>
+        <p class="book-author">Por {{ book().author }}</p>
+        <p class="book-quantity">Disponibles: {{ book().totalQuantity }}</p>
+    </div>
+</article>

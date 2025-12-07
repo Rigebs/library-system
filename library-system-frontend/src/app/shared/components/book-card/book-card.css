@@ -1,0 +1,65 @@
+.book-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  background-color: #ffffff;
+  text-align: center;
+  height: 100%; /* Ayuda en cuadrículas */
+}
+
+.book-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-image-container {
+  width: 100%;
+  /* Mantenemos una relación de aspecto consistente, ajustada al height de la imagen */
+  max-height: 250px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 10px;
+}
+
+.book-cover {
+  object-fit: contain; /* Asegura que la imagen se vea bien dentro del contenedor */
+  border-radius: 4px;
+}
+
+.card-content {
+  padding: 15px;
+  flex-grow: 1; /* Permite que el contenido ocupe el espacio restante */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.book-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.book-author {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin-bottom: 5px;
+}
+
+.book-quantity {
+  font-size: 0.85rem;
+  color: #059669; /* Color verde para disponibilidad */
+  font-weight: 500;
+}

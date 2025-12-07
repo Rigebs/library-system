@@ -1,0 +1,136 @@
+.book-detail-container {
+  padding: 30px 20px;
+  max-width: 1000px;
+}
+
+.detail-card {
+  display: flex;
+  gap: 40px;
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* --- Sección de Portada y Acciones --- */
+.cover-section {
+  flex-shrink: 0;
+  text-align: center;
+  width: 250px; /* Ancho fijo para la portada */
+}
+
+.cover-section img {
+  border-radius: 4px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.actions {
+  margin-top: 25px;
+}
+
+.btn-borrow {
+  background-color: #0070f3;
+  color: white;
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.btn-borrow:hover:not([disabled]) {
+  background-color: #005ac9;
+}
+
+.btn-borrow:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.availability-status {
+  margin-top: 15px;
+  font-size: 0.9rem;
+  color: #475569;
+}
+
+.availability-status span {
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.available {
+  color: #047857; /* Verde oscuro */
+  background-color: #ecfdf5; /* Verde claro */
+}
+
+.unavailable {
+  color: #dc2626; /* Rojo oscuro */
+  background-color: #fee2e2; /* Rojo claro */
+}
+
+/* --- Sección de Información --- */
+.info-section {
+  flex-grow: 1;
+}
+
+.info-section h2 {
+  margin-top: 0;
+  font-size: 2.2rem;
+  padding-bottom: 0;
+}
+
+.author-category {
+  font-size: 1.1rem;
+  color: #64748b;
+  margin-bottom: 15px;
+}
+
+.author-category span {
+  color: #0070f3;
+  font-weight: 600;
+}
+
+.rating-info {
+  font-size: 1.1rem;
+  color: #f59e0b;
+  margin-bottom: 20px;
+}
+
+.info-section h3 {
+  font-size: 1.5rem;
+  color: #1e293b;
+  margin: 20px 0 10px 0;
+}
+
+.info-section p {
+  line-height: 1.6;
+  color: #475569;
+}
+
+.details-grid {
+  margin-top: 15px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  font-size: 0.95rem;
+}
+
+.mt-20 {
+  margin-top: 20px !important;
+}
+
+/* Responsive */
+@media (max-width: 800px) {
+  .detail-card {
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .cover-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}

@@ -1,0 +1,44 @@
+.login-container,
+.register-container {
+  max-width: 450px;
+  width: 100%;
+  margin: 50px auto;
+}
+
+form {
+  margin-bottom: 25px;
+}
+
+button {
+  margin-top: 12px;
+}
+
+.register-link,
+.login-link {
+  text-align: center;
+  font-size: 0.95rem;
+  color: #475569;
+  margin-top: 15px;
+}
+
+.register-link a,
+.login-link a {
+  color: #0070f3;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.register-link a:hover,
+.login-link a:hover {
+  color: #005ac9;
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .login-container,
+  .register-container {
+    margin: 0;
+    max-width: 100%;
+  }
+}

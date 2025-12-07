@@ -1,0 +1,35 @@
+/* --- Estilos para el botón de Volver (Button sin fondo) --- */
+.back-button {
+  /* 1. Resetear la apariencia de botón */
+  background: none !important; /* Elimina el fondo azul primario */
+  border: none !important; /* Elimina cualquier borde */
+  box-shadow: none !important; /* Elimina la sombra */
+  padding: 0 !important; /* Quita el padding interno */
+
+  /* 2. Comportamiento y alineación */
+  display: flex; /* Para alinear el ícono y el texto */
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  width: auto; /* Evita que ocupe el 100% de ancho */
+
+  /* 3. Estilo de texto */
+  color: #475569; /* Color de texto sutil */
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: color 0.2s;
+  margin-top: 0; /* Anula el margin-top: 15px de los botones de form */
+  margin-bottom: 20px;
+}
+
+.back-button:hover:not([disabled]) {
+  color: #0070f3; /* Cambia a azul al pasar el ratón */
+  text-decoration: underline; /* Añade un subrayado para simular link */
+  background: none !important;
+}
+
+.back-button .icon-back {
+  width: 16px;
+  height: 16px;
+  /* Si la flecha es un SVG monocromático, su color cambiará con 'color' */
+}

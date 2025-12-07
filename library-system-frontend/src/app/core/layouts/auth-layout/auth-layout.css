@@ -1,0 +1,20 @@
+.auth-wrapper {
+  /* Estilo del body en styles.css ya lo centra, pero aquí forzamos la altura total y centrado en el viewport */
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Centrar verticalmente */
+  padding: 20px;
+}
+.auth-content {
+  /* El formulario (Login/Register) usará la clase .container global */
+  width: 100%;
+  max-width: 450px; /* Ancho máximo para el contenedor de login/registro */
+}
+
+@media (max-width: 600px) {
+  .auth-wrapper {
+    align-items: flex-start; /* En móvil, alinear al principio para evitar que el teclado oculte el formulario */
+    padding: 0;
+  }
+}

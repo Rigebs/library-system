@@ -6,6 +6,7 @@ import com.rige.mappers.UserMapper;
 import com.rige.repositories.UserRepository;
 import com.rige.services.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,6 +29,16 @@ public class UserServiceImpl implements UserService {
     public UserResponse findUserById(Long id) {
         UserEntity user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
+        return userMapper.toResponse(user);
+    }
+
+    @Override
+    public UserResponse getAuthenticatedUser() {
+        String principalName = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        UserEntity user = userRepository.findByEmail(principalName)
+                .orElseThrow(() -> new RuntimeException("Authenticated user not found."));
+
         return userMapper.toResponse(user);
     }
 

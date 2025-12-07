@@ -1,0 +1,68 @@
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  top: 0;
+  z-index: 100;
+}
+
+.logo a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.app-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.btn-logout {
+  background-color: #ef4444;
+  padding: 8px 15px;
+  width: auto;
+  margin: 0;
+  font-weight: 500;
+  box-shadow: none;
+}
+
+.btn-logout:hover {
+  background-color: #dc2626;
+}
+
+.user-info {
+  margin-right: 20px;
+  font-size: 0.95rem;
+  color: #374151;
+}
+
+.btn-login {
+  background-color: #3b82f6;
+  color: #fff;
+  padding: 8px 15px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.2s;
+  display: inline-block;
+}
+
+.btn-login:hover {
+  background-color: #2563eb;
+}
+
+@media (max-width: 600px) {
+  .app-header {
+    padding: 10px 10px;
+  }
+  .app-title {
+    font-size: 1.2rem;
+  }
+  .btn-logout {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+  }
+}

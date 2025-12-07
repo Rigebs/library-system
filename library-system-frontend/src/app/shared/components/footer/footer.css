@@ -1,0 +1,59 @@
+.app-footer {
+  background-color: #333; /* Fondo oscuro, común para footers */
+  color: #fff; /* Texto blanco para contraste */
+  padding: 20px 40px; /* Espacio interno, ajusta los 40px al padding de tu .main-content */
+  border-top: 1px solid #444; /* Separador sutil */
+  text-align: center;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between; /* Alinea los extremos (copyright a la izquierda, nav a la derecha) */
+  align-items: center;
+  max-width: 1200px; /* Limita el ancho del contenido si es necesario */
+  margin: 0 auto;
+}
+
+.copyright {
+  font-size: 0.9em;
+  margin: 0;
+}
+
+.footer-nav {
+  display: flex;
+  align-items: center;
+}
+
+.footer-link {
+  color: #aaa; /* Un color de enlace más sutil */
+  text-decoration: none;
+  font-size: 0.9em;
+  transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+  color: #fff; /* Se vuelve blanco al pasar el ratón */
+  text-decoration: underline;
+}
+
+.separator {
+  margin: 0 10px;
+  color: #666; /* Color del separador */
+}
+
+/* Media Query para pantallas pequeñas */
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column; /* Apila el copyright y la navegación */
+    gap: 10px; /* Espacio entre los elementos apilados */
+  }
+
+  .footer-nav {
+    /* En pantallas pequeñas, podemos hacer que los separadores sean menos visibles o usar un espaciado */
+    gap: 10px;
+  }
+
+  .separator {
+    display: none; /* Ocultamos el separador "|" para una mejor presentación apilada */
+  }
+}

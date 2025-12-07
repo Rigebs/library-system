@@ -40,6 +40,21 @@ public class UserController {
         }
     }
 
+    @GetMapping("/me")
+    public ResponseEntity<ApiResponse<UserResponse>> getAuthenticatedUser() {
+        try {
+            UserResponse response = userService.getAuthenticatedUser();
+            return ResponseEntity.ok(
+                    ApiResponse.success(response, "Authenticated user data retrieved successfully")
+            );
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(
+                    ApiResponse.error("Failed to retrieve authenticated user: " + e.getMessage()),
+                    HttpStatus.UNAUTHORIZED
+            );
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteUser(@PathVariable Long id) {
         try {

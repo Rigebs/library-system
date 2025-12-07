@@ -1,0 +1,21 @@
+<div class="container">
+    <h2>Edición de Usuario</h2>
+
+    @if (isLoading()) {
+    <p class="loading-indicator">Cargando datos del usuario...</p>
+    }
+
+    @if (errorMessage(); as error) {
+    <div class="alert" [class.alert-error]="true">{{ error }}</div>
+    }
+
+    @if (userToEdit()) {
+    <app-user-form [userData]="userToEdit()" [isLoading]="isSaving()" (save)="onUpdate($event)" />
+    } @else if (!isLoading() && !errorMessage()) {
+    <p class="not-found">Usuario no encontrado o no tienes permiso para editarlo.</p>
+    }
+
+    <button [routerLink]="['/dashboard']" class="back-button">
+        &larr; Volver a la Lista
+    </button>
+</div>

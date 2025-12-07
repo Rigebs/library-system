@@ -8,6 +8,8 @@ public interface UserService {
 
     List<UserResponse> findAllUsers();
 
+    UserResponse getAuthenticatedUser();
+
     UserResponse findUserById(Long id);
 
     void deleteUser(Long id);

@@ -1,0 +1,25 @@
+<header class="app-header">
+    <div class="logo">
+        <a [routerLink]="['/']">
+            <span class="app-title">Biblioteca Digital</span>
+        </a>
+    </div>
+
+    <div class="actions">
+        @if (isLoggedIn()) {
+        <div class="user-info">
+            @if (currentUser(); as user) {
+            <span>Hola, <strong>{{ user.email }}</strong></span>
+            }
+        </div>
+
+        <button class="btn-logout" (click)="logout()">
+            Cerrar Sesión
+        </button>
+        } @else {
+        <a [routerLink]="['/auth/login']" class="btn-login">
+            Iniciar Sesión
+        </a>
+        }
+    </div>
+</header>

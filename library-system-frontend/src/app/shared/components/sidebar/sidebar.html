@@ -1,0 +1,63 @@
+<nav class="sidebar">
+    <div class="sidebar-header">
+        <h1 class="system-title">Sistema de Librería Digital</h1>
+    </div>
+
+    <div class="sidebar-body">
+        <ul class="nav-list">
+
+            @for (item of navItems; track item.label) {
+            <li class="nav-parent" [class.nav-simple]="!item.children">
+
+                <a class="nav-item" (click)="performAction(item)" [routerLink]="item.routerLink"
+                    [routerLinkActive]="item.routerLink ? 'active' : ''"
+                    [routerLinkActiveOptions]="{exact: item.exactLink ?? false}">
+
+                    @if (item.icon) {
+                    <span class="icon-container">
+                        <img class="icon" [src]="item.icon" [alt]="item.label">
+                    </span>
+                    }
+
+                    <span class="label">{{ item.label }}</span>
+
+                    @if (item.children) {
+                    <span class="arrow-container">
+                        <img [src]="item.menuKey === menuOpen ? '/icons/arrow-up.svg' : '/icons/arrow-down.svg'"
+                            class="arrow-icon" alt="arrow" />
+                    </span>
+                    }
+                </a>
+
+                @if (item.children) {
+                <ul class="nav-children" [class.open]="item.menuKey === menuOpen">
+                    @for (child of item.children; track child.label) {
+                    <li>
+                        <a [routerLink]="child.routerLink" routerLinkActive="active"
+                            [routerLinkActiveOptions]="{exact: child.exactLink ?? false}" class="nav-child">
+                            {{ child.label }}
+                        </a>
+                    </li>
+                    }
+                </ul>
+                }
+            </li>
+            } @empty {
+            <li class="nav-parent">No hay elementos de navegación disponibles.</li>
+            }
+        </ul>
+    </div>
+
+    <div class="sidebar-footer">
+        <div class="user-profile-wrapper">
+            <div class="profile-initial">{{ getUserInitial() }}</div>
+            <div class="user-info">
+                <span class="user-name">{{ userName }}</span>
+                <span class="user-role">{{ userRole }}</span>
+            </div>
+        </div>
+        <button class="logout-button" (click)="logout()" title="Cerrar Sesión">
+            <img [src]="logoutIcon" alt="Cerrar Sesión" class="icon">
+        </button>
+    </div>
+</nav>

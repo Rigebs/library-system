@@ -1,0 +1,71 @@
+<div class="container catalog-container">
+    <h2>Catálogo Digital de Libros</h2>
+    <p class="subtitle">Explora la colección y solicita un préstamo digital.</p>
+
+    <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="search-form card-form">
+        <div class="filter-grid">
+            <div class="form-group">
+                <label for="title">Título</label>
+                <input id="title" type="text" formControlName="title" placeholder="Buscar por título" />
+            </div>
+
+            <div class="form-group">
+                <label for="author">Autor</label>
+                <input id="author" type="text" formControlName="author" placeholder="Buscar por autor" />
+            </div>
+
+            <div class="form-group">
+                <label for="isbn">ISBN</label>
+                <input id="isbn" type="text" formControlName="isbn" placeholder="Buscar por ISBN" />
+            </div>
+
+            <div class="form-group">
+                <label for="category">Categoría</label>
+                <select id="category" formControlName="categoryId">
+                    <option [ngValue]="null">Todas las categorías</option>
+                    @for (category of categories(); track category.id) {
+                    <option [ngValue]="category.id">{{ category.name }}</option>
+                    }
+                </select>
+            </div>
+
+        </div>
+
+        <div class="action-buttons">
+            <button type="submit" [disabled]="isLoading()" class="btn-search btn-icon">
+                <img src="/icons/search.svg" alt="Search" class="icon" width="20" height="20" ngSrc="/icons/search.svg"
+                    priority />
+                Buscar
+            </button>
+            <button type="button" (click)="onClearFilters()" class="btn-clear">Limpiar Filtros</button>
+        </div>
+    </form>
+
+    <hr class="separator" />
+
+    <div class="book-grid">
+        @if (isLoading()) {
+        <p class="loading-indicator">Cargando libros...</p>
+        } @else if (books().length > 0) {
+        @for (book of books(); track book.id) {
+        <div class="book-card" [routerLink]="['/admin/books/detail', book.id]">
+            <div class="cover-container">
+                <img src="book.coverUrl" alt="Cover of {{ book.title }}" width="150" height="225" priority />
+            </div>
+            <div class="book-info">
+                <h3>{{ book.title }}</h3>
+                <p class="author">Por: {{ book.author }}</p>
+                <div class="status-badge" [class.available]="book.availableQuantity > 0"
+                    [class.unavailable]="book.availableQuantity === 0">
+                    {{ book.availableQuantity > 0 ? 'Disponible' : 'Sin Stock' }}
+                </div>
+                <p class="qty">({{ book.availableQuantity }} copias disponibles)</p>
+            </div>
+        </div>
+        }
+        } @else {
+        <p class="no-results">No se encontraron libros que coincidan con los criterios de búsqueda.</p>
+        }
+    </div>
+
+</div>

@@ -1,0 +1,13 @@
+<div class="container">
+    <h2>Crear Nuevo Usuario</h2>
+
+    @if (errorMessage(); as error) {
+    <div class="alert" [class.alert-error]="true">{{ error }}</div>
+    }
+
+    <app-user-form [isLoading]="isLoading()" (save)="onCreate($event)" />
+
+    <button [routerLink]="['/dashboard']" class="back-button">
+        &larr; Volver a la Lista
+    </button>
+</div>

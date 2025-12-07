@@ -1,1 +1,175 @@
-/* You can add global styles to this file, and also import other style files */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  background-color: #f7f9fc;
+  color: #1e293b;
+}
+
+.container {
+  max-width: 1200px; /* el ancho máximo que deseas */
+  margin: 0 auto; /* centra el contenedor */
+  width: 100%; /* permite que se adapte en pantallas pequeñas */
+}
+
+h2 {
+  color: #1e293b;
+  font-weight: 600;
+  font-size: 2rem;
+  padding-bottom: 15px;
+}
+
+button {
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+button:disabled {
+  background-color: #cbd5e1;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.form-group {
+  margin-bottom: 12px;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+}
+
+.btn-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+}
+
+button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+}
+
+label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #475569;
+}
+
+input[type='text'],
+input[type='email'],
+input[type='password'],
+input[type='number'],
+select,
+textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 1rem;
+  color: #1e293b;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #0070f3;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.1);
+}
+
+input.ng-invalid.ng-touched,
+select.ng-invalid.ng-touched,
+textarea.ng-invalid.ng-touched {
+  border-color: #ef4444;
+}
+
+.error-message {
+  color: #dc2626;
+  font-size: 0.85rem;
+  margin-top: 5px;
+  font-weight: 500;
+}
+
+.alert {
+  padding: 15px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  font-weight: 500;
+}
+
+.alert-error {
+  background-color: #fee2e2;
+  color: #dc2626;
+  border-color: #fca5a5;
+}
+
+.btn-circular-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.btn-circular-icon.btn-delete {
+  background-color: #ef4444;
+}
+
+.btn-circular-icon.btn-delete:hover:not(:disabled) {
+  background-color: #dc2626;
+}
+
+.btn-circular-icon.btn-edit {
+  background-color: #f97316;
+}
+
+.btn-circular-icon.btn-edit:hover:not(:disabled) {
+  background-color: #ea580c;
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 20px;
+    box-shadow: none;
+    border-radius: 0;
+    border: none;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  .back-button {
+    width: 100%;
+  }
+}

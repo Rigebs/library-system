@@ -1,0 +1,37 @@
+<div class="home-container">
+    <header class="hero-section">
+        <div class="hero-content-wrapper">
+
+            <img [src]="'/images/hero.jfif'" alt="Estantería llena de libros" width="800" height="450" priority
+                class="hero-image" />
+
+            <div class="hero-text-content">
+                <h1>Bienvenido a la Biblioteca Digital</h1>
+                <p>Explora nuestro catálogo de libros y recursos.</p>
+
+                <div class="hero-actions">
+                    <button (click)="incrementVisits()">
+                        Visitas Registradas: {{ visits() }}
+                    </button>
+                    <p class="greeting">{{ welcomeMessage() }}</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="featured-books">
+        <h2>Catálogo de Libros Disponibles</h2>
+
+        @if (isLoading()) {
+        <p class="loading-message">Cargando libros... ⏳</p>
+        }
+
+        @if (!isLoading() && !loadingError() && availableBooks().length > 0) {
+        <div class="book-list">
+            @for (book of availableBooks(); track book.id) {
+            <app-book-card [book]="book" />
+            }
+        </div>
+        }
+    </section>
+</div>

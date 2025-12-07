@@ -1,0 +1,9 @@
+<div class="container" style="max-width: 700px;">
+    <button class="back-button" (click)="router.navigate(['/admin/books'])">
+        <img src="/icons/arrow-left.svg" alt="Back" class="icon-back" />
+        Back to List
+    </button>
+
+    <h2>Create New Book</h2>
+    <app-book-form [isEditMode]="false" [isSubmitting]="isSubmitting()" (formSubmit)="onSubmit($event)" />
+</div>

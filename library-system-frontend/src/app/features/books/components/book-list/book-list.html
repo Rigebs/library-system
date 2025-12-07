@@ -1,0 +1,63 @@
+<div class="book-list-container">
+    <div class="list-header">
+        <h2>📚 Book Management</h2>
+        <div>
+            <button class="btn-create btn-icon button" routerLink="/admin/books/create">
+                <img src="/icons/add.svg" alt="Add Icon" class="icon" width="20" height="20" />
+                New Book
+            </button>
+        </div>
+    </div>
+
+    @if (error()) {
+    <div class="alert alert-error">
+        <img src="/icons/alert.svg" alt="Error Icon" class="icon" width="20" height="20" />
+        {{ error() }}
+    </div>
+    } @if (isLoading()) {
+    <p>Loading books...</p>
+    }
+
+    @if (!isLoading() && books().length > 0) {
+    <div class="table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th>Cover</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>ISBN</th>
+                    <th>Qty</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (book of books(); track book.id) {
+                <tr class="row">
+                    <td>
+                        <img [src]="book.coverUrl" alt="Book Cover" width="40" height="60"
+                            style="object-fit: contain; border-radius: 4px;" />
+                    </td>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.author }}</td>
+                    <td>{{ book.isbn }}</td>
+                    <td>{{ book.totalQuantity }}</td>
+                    <td>
+                        <div class="actions-column">
+                            <button class="btn-edit btn-circular-icon" (click)="onEdit(book)">
+                                <img src="/icons/edit.svg" alt="Edit Icon" class="icon" width="16" height="16" />
+                            </button>
+                            <button class="btn-delete btn-circular-icon" (click)="onDelete(book.id)">
+                                <img src="/icons/delete.svg" alt="Delete Icon" class="icon" width="16" height="16" />
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    } @else if (!isLoading()) {
+    <p>No books found. Please create one.</p>
+    }
+</div>

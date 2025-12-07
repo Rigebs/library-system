@@ -1,0 +1,73 @@
+<form [formGroup]="bookForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+        <label for="title">Título</label>
+        <input type="text" id="title" formControlName="title" placeholder="El Señor de los Anillos" />
+        @if (hasError('title', 'required')) {
+        <p class="error-message">El título es obligatorio.</p>
+        }
+    </div>
+
+    <div class="form-group">
+        <label for="author">Autor</label>
+        <input type="text" id="author" formControlName="author" placeholder="J.R.R. Tolkien" />
+        @if (hasError('author', 'required')) {
+        <p class="error-message">El autor es obligatorio.</p>
+        }
+    </div>
+
+    <div class="form-group">
+        <label for="isbn">ISBN</label>
+        <input type="text" id="isbn" formControlName="isbn" placeholder="978-0618260211" />
+        @if (hasError('isbn', 'required')) {
+        <p class="error-message">El ISBN es obligatorio.</p>
+        }
+    </div>
+
+    <div class="form-group">
+        <label for="publisher">Editorial</label>
+        <input type="text" id="publisher" formControlName="publisher" placeholder="Houghton Mifflin" />
+        @if (hasError('publisher', 'required')) {
+        <p class="error-message">La editorial es obligatoria.</p>
+        }
+    </div>
+
+    <div class="form-group">
+        <label for="summary">Resumen</label>
+        <textarea id="summary" formControlName="summary" placeholder="Un gran resumen del libro..." rows="4"></textarea>
+        @if (hasError('summary', 'required')) {
+        <p class="error-message">El resumen es obligatorio.</p>
+        }
+    </div>
+
+    <div class="form-group">
+        <label for="totalQuantity">Cantidad Total</label>
+        <input type="number" id="totalQuantity" formControlName="totalQuantity" placeholder="1" />
+        @if (hasError('totalQuantity', 'required')) {
+        <p class="error-message">La cantidad total es obligatoria.</p>
+        } @else if (hasError('totalQuantity', 'min')) {
+        <p class="error-message">La cantidad debe ser al menos 1.</p>
+        }
+    </div>
+
+    <div class="form-group">
+        <label for="coverUrl">URL de la Cubierta</label>
+        <input type="text" id="coverUrl" formControlName="coverUrl" placeholder="http://ejemplo.com/portada.jpg" />
+        <small>Esta URL será utilizada con NgOptimizedImage (requiere dominios de confianza). Si la imagen es un activo
+            estático, use una ruta relativa.</small>
+        @if (hasError('coverUrl', 'required')) {
+        <p class="error-message">La URL de la cubierta es obligatoria.</p>
+        }
+    </div>
+
+    <div class="form-group">
+        <label for="fileUrl">Ruta/URL de Descarga</label>
+        <input type="text" id="fileUrl" formControlName="fileUrl" placeholder="/assets/books/mi-libro.pdf" />
+        @if (hasError('fileUrl', 'required')) {
+        <p class="error-message">La ruta/URL del archivo es obligatoria.</p>
+        }
+    </div>
+
+    <button type="submit" [disabled]="bookForm.invalid || isSubmitting()">
+        {{ isEditMode() ? 'Guardar Cambios' : 'Crear Libro' }}
+    </button>
+</form>
