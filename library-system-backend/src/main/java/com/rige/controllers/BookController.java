@@ -72,7 +72,7 @@ public class BookController {
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<BookResponse>> updateBook(@PathVariable Long id,
                                                                 @RequestBody BookRequest request) {
-        BookResponse response = bookService.saveBook(request);
+        BookResponse response = bookService.updateBook(id, request);
         return ResponseEntity.ok(
                 ApiResponse.success(response, "Book updated successfully")
         );

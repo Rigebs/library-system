@@ -35,4 +35,8 @@ public class BookEntity {
 
     @Column(nullable = false)
     private Integer totalQuantity;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)
+    private CategoryEntity category;
 }

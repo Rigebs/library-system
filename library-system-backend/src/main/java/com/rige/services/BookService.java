@@ -9,6 +9,7 @@ public interface BookService {
     List<BookResponse> findAllBooks();
     BookResponse findBookById(Long id);
     BookResponse saveBook(BookRequest request);
+    BookResponse updateBook(Long id, BookRequest request);
     void deleteBook(Long id);
     boolean isBookAvailable(Long bookId);
 }

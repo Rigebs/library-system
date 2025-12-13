@@ -3,6 +3,7 @@ package com.rige.controllers;
 import com.rige.dto.request.LoanRequest;
 import com.rige.dto.response.ApiResponse;
 import com.rige.dto.response.LoanResponse;
+import com.rige.enums.LoanStatus;
 import com.rige.services.LoanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,11 +20,22 @@ public class LoanController {
     private final LoanService loanService;
 
     @GetMapping
-    public ResponseEntity<ApiResponse<List<LoanResponse>>> getAllLoans() {
-        List<LoanResponse> loans = loanService.findAllLoans();
-        return ResponseEntity.ok(
-                ApiResponse.success(loans, "Loan list retrieved successfully")
-        );
+    public ResponseEntity<ApiResponse<List<LoanResponse>>> getAllLoans(
+            @RequestParam(required = false) List<LoanStatus> status) {
+
+        List<LoanResponse> loans;
+
+        if (status != null && !status.isEmpty()) {
+            loans = loanService.findLoansByStatusIn(status);
+            return ResponseEntity.ok(
+                    ApiResponse.success(loans, "Loan list filtered by status retrieved successfully")
+            );
+        } else {
+            loans = loanService.findAllLoans();
+            return ResponseEntity.ok(
+                    ApiResponse.success(loans, "Complete loan history retrieved successfully")
+            );
+        }
     }
 
     @PostMapping("/create")
@@ -38,6 +50,21 @@ public class LoanController {
             return new ResponseEntity<>(
                     ApiResponse.error("Failed to create loan: " + e.getMessage()),
                     HttpStatus.BAD_REQUEST
+            );
+        }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<LoanResponse>> getLoanById(@PathVariable Long id) {
+        try {
+            LoanResponse loan = loanService.findLoanById(id);
+            return ResponseEntity.ok(
+                    ApiResponse.success(loan, "Loan retrieved successfully")
+            );
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(
+                    ApiResponse.error("Failed to retrieve loan: " + e.getMessage()),
+                    HttpStatus.NOT_FOUND
             );
         }
     }
