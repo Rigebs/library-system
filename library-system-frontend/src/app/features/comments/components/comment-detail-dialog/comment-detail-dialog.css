@@ -1,0 +1,199 @@
+/* ------------------------------------------------ */
+/* 1. Contenedor Principal y Estructura */
+/* ------------------------------------------------ */
+
+.custom-dialog-container {
+  width: 100%;
+  max-width: 600px; /* Tamaño máximo típico para un modal de detalle */
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 8px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px 10px 24px;
+  border-bottom: 1px solid #eee;
+}
+
+.header h2 {
+  margin: 0;
+  font-size: 1.3em;
+  color: #333;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  color: #aaa;
+  transition: color 0.2s;
+  padding: 5px;
+  line-height: 0;
+}
+
+.close-button:hover {
+  color: #333;
+}
+
+.content {
+  padding: 24px;
+  flex-grow: 1; /* Permite que el contenido ocupe el espacio */
+  overflow-y: auto; /* Scroll si el contenido es demasiado largo */
+}
+
+/* ------------------------------------------------ */
+/* 2. Metadatos (Libro, Usuario, Fecha) */
+/* ------------------------------------------------ */
+
+.metadata-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Dos columnas */
+  gap: 15px 20px;
+  margin-bottom: 20px;
+}
+
+.meta-item .label {
+  font-weight: 600;
+  color: #555;
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.9em;
+}
+
+/* Enlaces para Libro/Usuario */
+.meta-item a {
+  color: var(--color-primary, #007bff);
+  text-decoration: none;
+}
+.meta-item a:hover {
+  text-decoration: underline;
+}
+
+/* ------------------------------------------------ */
+/* 3. Contenido del Comentario */
+/* ------------------------------------------------ */
+
+.comment-text-box {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  border-left: 4px solid var(--color-accent, #ffc107); /* Color de acento para la barra lateral */
+}
+
+.comment-text-box h3 {
+  margin: 0 0 10px 0;
+  font-size: 1.1em;
+  color: #333;
+}
+
+.comment-text-box p {
+  white-space: pre-wrap; /* Mantiene saltos de línea y formato */
+  margin: 0;
+  font-size: 1em;
+  line-height: 1.5;
+  color: #444;
+}
+
+/* ------------------------------------------------ */
+/* 4. Insignia de Estado (Status Badge) */
+/* ------------------------------------------------ */
+
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.85em;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.status-pending {
+  background-color: #ffeb3b4d; /* Amarillo suave */
+  color: #ffc107;
+}
+
+.status-approved {
+  background-color: #c8e6c9; /* Verde suave */
+  color: #4caf50;
+}
+
+.status-rejected {
+  background-color: #ffcdd2; /* Rojo suave */
+  color: #f44336;
+}
+
+/* ------------------------------------------------ */
+/* 5. Acciones de Moderación */
+/* ------------------------------------------------ */
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 15px 24px;
+  border-top: 1px solid #eee;
+}
+
+/* Estilos de botones genéricos (asumiendo que ya tienes estas clases definidas en un CSS global) */
+.btn {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.btn-primary {
+  background-color: var(--color-primary, #007bff);
+  color: white;
+}
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-warn {
+  background-color: var(--color-warn, #dc3545);
+  color: white;
+}
+.btn-warn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background-color: #e9ecef;
+  color: #333;
+}
+.btn-secondary:hover:not(:disabled) {
+  background-color: #dee2e6;
+}
+
+/* ------------------------------------------------ */
+/* 6. Estilos para Íconos Personalizados */
+/* ------------------------------------------------ */
+
+.icon-small {
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+}
+
+.icon-default {
+  width: 18px;
+  height: 18px;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+
+.icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

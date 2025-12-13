@@ -1,0 +1,39 @@
+<div class="moderation-container">
+    <h2>Moderación de Comentarios</h2>
+
+    <div class="filter-tabs">
+        <button [class.active]="currentFilter() === 'PENDING'" (click)="setFilter('PENDING')">
+            Pendientes ({{ pendingCount() }})
+        </button>
+        <button [class.active]="currentFilter() === 'APPROVED'" (click)="setFilter('APPROVED')">
+            Aprobados ({{ approvedCount() }})
+        </button>
+        <button [class.active]="currentFilter() === 'REJECTED'" (click)="setFilter('REJECTED')">
+            Rechazados ({{ rejectedCount() }})
+        </button>
+        <button [class.active]="currentFilter() === 'ALL'" (click)="setFilter('ALL')">
+            Todos ({{ totalCount() }})
+        </button>
+    </div>
+    @if (error()) {
+    <div class="alert alert-error">{{ error() }}</div>
+    }
+
+    @if (isLoading()) {
+    <p>Cargando comentarios para moderación...</p>
+    } @else if (filteredComments().length === 0) {
+    <div class="no-data-message">
+        <p>No hay comentarios {{ currentFilter() | lowercase }} para mostrar.</p>
+    </div>
+    } @else {
+    <app-comments-table [comments]="filteredComments()" (approve)="onApprove($event)" (reject)="onReject($event)"
+        (viewDetail)="onViewDetails($event)" />
+    }
+</div>
+
+<app-modal-container [isOpen]="activeCommentInDialog() !== null" (closeRequested)="dialogService.close()">
+
+    @if (activeCommentInDialog()) {
+    <app-comment-detail-dialog [comment]="activeCommentInDialog()!" />
+    }
+</app-modal-container>

@@ -1,0 +1,9 @@
+<div class="container" style="max-width: 700px;">
+    <button class="back-button" (click)="router.navigate(['/admin/loans'])">
+        <img src="/icons/arrow-left.svg" alt="Back" class="icon-back" />
+        Volver a la Lista
+    </button>
+
+    <h2>Registrar Nuevo Préstamo</h2>
+    <app-loan-form [isSubmitting]="isSubmitting()" (formSubmit)="onSubmit($event)" />
+</div>

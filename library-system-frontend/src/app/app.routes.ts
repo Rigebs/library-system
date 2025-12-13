@@ -3,7 +3,6 @@ import { AuthGuard } from './core/auth/auth.guard';
 import { AuthLayout } from './core/layouts/auth-layout/auth-layout';
 import { MainLayout } from './core/layouts/main-layout/main-layout';
 import { DefaultLayout } from './core/layouts/default-layout/default-layout';
-import { AdminGuard } from './core/auth/admin.guard';
 
 export const routes: Routes = [
   {
@@ -30,6 +29,25 @@ export const routes: Routes = [
         path: 'books',
         loadChildren: () =>
           import('./features/books/admin-book.routes').then((m) => m.ADMIN_BOOKS_ROUTES),
+      },
+      {
+        path: 'categories',
+        loadChildren: () =>
+          import('./features/categories/category.routes').then((m) => m.CATEGORY_ROUTES),
+      },
+      {
+        path: 'loans',
+        loadChildren: () => import('./features/loans/loan.routes').then((m) => m.LOAN_ROUTES),
+      },
+      {
+        path: 'dashboard',
+        loadChildren: () =>
+          import('./features/dashboard/dashboard.routes').then((m) => m.DASHBOARD_ROUTES),
+      },
+      {
+        path: 'moderation',
+        loadChildren: () =>
+          import('./features/comments/comments.routes').then((m) => m.COMMENTS_ROUTES),
       },
     ],
   },

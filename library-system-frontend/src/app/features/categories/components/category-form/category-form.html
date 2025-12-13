@@ -1,0 +1,42 @@
+<div class="form-panel">
+
+    <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="name">Nombre de la Categoría</label>
+            <input id="name" type="text" formControlName="name" />
+
+            @if (categoryForm.get('name')!.invalid && (categoryForm.get('name')!.dirty ||
+            categoryForm.get('name')!.touched)) {
+            <div class="error-message">
+                @if (categoryForm.get('name')!.hasError('required')) {
+                <span>El nombre es obligatorio.</span>
+                } @else if (categoryForm.get('name')!.hasError('minlength') ||
+                categoryForm.get('name')!.hasError('maxlength')) {
+                <span>Debe tener entre 2 y 50 caracteres.</span>
+                }
+            </div>
+            }
+        </div>
+
+        @if (formError()) {
+        <div class="alert alert-error">{{ formError() }}</div>
+        }
+
+        <div class="form-actions">
+            <button type="submit" [disabled]="isSubmitting() || categoryForm.invalid" class="btn-primary">
+                @if (isSubmitting()) {
+                Guardando...
+                } @else {
+                {{ selectedCategory() ? 'Guardar Cambios' : 'Crear Categoría' }}
+                }
+            </button>
+
+            @if (cancelCallback()) {
+            <button type="button" (click)="onCancel()" class="btn-secondary">
+                Cancelar
+            </button>
+            }
+
+        </div>
+    </form>
+</div>

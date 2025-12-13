@@ -1,0 +1,21 @@
+<div class="date-picker-container" (focusout)="closeCalendarOnFocusOut($event)" tabindex="0"
+    (keydown.escape)="isCalendarOpen.set(false)">
+
+    <div class="date-input" role="textbox" tabindex="0" (click)="toggleCalendar()" (keydown.enter)="toggleCalendar()"
+        (keydown.space)="toggleCalendar()" [class.active]="isCalendarOpen()">
+
+        <span class="date-text">
+            {{ selectedDate() ? (selectedDate() | date: dateFormat()) : placeholder() }}
+        </span>
+
+        <span class="calendar-icon">
+        </span>
+
+    </div>
+
+    @if (isCalendarOpen()) {
+    <div class="calendar-popup">
+        <app-calendar [initialDate]="selectedDate()" (daySelected)="handleDaySelected($event)" />
+    </div>
+    }
+</div>

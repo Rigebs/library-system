@@ -1,0 +1,58 @@
+<div class="custom-dialog-container">
+    <div class="header">
+        <h2>Detalle y Moderación de Comentario #{{ comment().id }}</h2>
+        <button class="close-button" (click)="onClose()">
+            <img src="/icons/close.svg" alt="Cerrar" class="icon-small">
+        </button>
+    </div>
+
+    <div class="content">
+        <div class="metadata-grid">
+            <div class="meta-item">
+                <span class="label">Estado Actual:</span>
+                <span class="status-badge status-{{ comment().status | lowercase }}">
+                    {{ comment().status }}
+                </span>
+            </div>
+            <div class="meta-item">
+                <span class="label">Fecha de Creación:</span>
+                <span>{{ comment().createdAt | date:'medium' }}</span>
+            </div>
+            <div class="meta-item">
+                <span class="label">Libro:</span>
+                <a [routerLink]="['/admin/books', comment().book.id]" (click)="onClose()">
+                    {{ comment().book.title }} (ID: {{ comment().book.id }})
+                </a>
+            </div>
+            <div class="meta-item">
+                <span class="label">Usuario:</span>
+                <a [routerLink]="['/admin/users', comment().user.id]" (click)="onClose()">
+                    {{ comment().user.name }} (ID: {{ comment().user.id }})
+                </a>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="comment-text-box">
+            <h3>Contenido Completo del Comentario:</h3>
+            <p>{{ comment().text }}</p>
+        </div>
+    </div>
+
+    <div class="actions">
+        <button class="btn btn-secondary" (click)="onClose()">Cancelar</button>
+
+        <button class="btn btn-warn icon-btn" (click)="onModerate('REJECTED')"
+            [disabled]="comment().status === 'REJECTED'">
+            <img src="/icons/delete.svg" alt="Rechazar" class="icon-default">
+            Rechazar
+        </button>
+
+        <button class="btn btn-primary icon-btn" (click)="onModerate('APPROVED')"
+            [disabled]="comment().status === 'APPROVED'">
+            <img src="/icons/check.svg" alt="Aprobar" class="icon-default">
+            Aprobar
+        </button>
+    </div>
+</div>

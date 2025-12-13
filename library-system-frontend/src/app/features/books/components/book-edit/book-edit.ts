@@ -5,6 +5,7 @@ import { BookService } from '../../book.service';
 import { Book, BookPayload } from '../../models/book.model';
 import { switchMap, tap, catchError, of, Observable, map } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { CategoryService } from '../../../categories/category.service';
 
 interface BookStateData {
   book: Book | null;
@@ -20,12 +21,15 @@ interface BookStateData {
 export class BookEditComponent implements OnInit {
   public isSubmitting = signal(false);
   private bookService = inject(BookService);
+  private categoryService = inject(CategoryService);
   public router = inject(Router);
   private route = inject(ActivatedRoute);
 
   public bookId = computed(() => Number(this.route.snapshot.paramMap.get('id')));
+  public bookData$!: Observable<BookStateData>;
 
-  public bookData$!: Observable<BookStateData>; // 👈 Tipado correcto
+  public categories = this.categoryService.categories;
+  public categoriesError = this.categoryService.error;
 
   ngOnInit() {
     this.bookData$ = this.route.paramMap.pipe(
@@ -33,11 +37,9 @@ export class BookEditComponent implements OnInit {
         const id = Number(params.get('id'));
         if (id) {
           return this.bookService.getBookById(id).pipe(
-            // 📚 CORRECCIÓN: Usar map para asegurar que el Observable emita el tipo BookStateData
             map((book) => ({ book: book, error: null } as BookStateData)),
             catchError((err) => {
               console.error('Error loading book:', err);
-              // Devolver un objeto del tipo BookStateData con el error
               return of({
                 book: null,
                 error: 'Failed to load book data.',
@@ -45,10 +47,10 @@ export class BookEditComponent implements OnInit {
             })
           );
         }
-        // Devolver un objeto del tipo BookStateData para ID inválido
         return of({ book: null, error: 'Invalid book ID.' } as BookStateData);
       })
     );
+    this.categoryService.loadCategories();
   }
 
   onSubmit(payload: BookPayload) {

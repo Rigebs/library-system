@@ -1,3 +1,5 @@
+import { Category } from '../../categories/models/category.model';
+
 export interface Book {
   id: number;
   title: string;
@@ -8,6 +10,10 @@ export interface Book {
   fileUrl: string;
   coverUrl: string;
   totalQuantity: number;
+  category: Category;
+  categoryId: number;
 }
 
-export type BookPayload = Omit<Book, 'id'>;
+export type BookPayload = Omit<Book, 'id' | 'category'> & {
+  categoryId: number;
+};

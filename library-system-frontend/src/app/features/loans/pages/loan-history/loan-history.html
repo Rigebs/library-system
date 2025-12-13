@@ -1,0 +1,61 @@
+<div class="book-list-container">
+    <div class="list-header">
+        <h2>Historial Completo de Préstamos</h2>
+    </div>
+
+    @if (error()) {
+    <div class="alert alert-error">
+        <img src="/icons/alert.svg" alt="Error Icon" class="icon" width="20" height="20" />
+        {{ error() }}
+    </div>
+    } @if (isListLoading()) {
+    <p>Cargando historial...</p>
+    }
+
+    @if (!isListLoading() && loans().length > 0) {
+    <div class="table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Usuario</th>
+                    <th>Libro</th>
+                    <th>Préstamo</th>
+                    <th>Dev. Esperada</th>
+                    <th>Dev. Real</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (loan of loans(); track loan.id) {
+                <tr class="row">
+                    <td>{{ loan.id }}</td>
+                    <td>{{ loan.user.name }}</td>
+                    <td>{{ loan.book.title }}</td>
+                    <td>{{ loan.loanDate | date: 'short' }}</td>
+                    <td>{{ loan.expectedReturnDate | date: 'short' }}</td>
+                    <td>{{ loan.actualReturnDate ? (loan.actualReturnDate | date: 'short') :
+                        'Pendiente' }}</td>
+                    <td>
+                        <span class="loan-status-badge" [class.active]="loan.status === 'ACTIVE'"
+                            [class.returned]="loan.status === 'RETURNED'" [class.overdue]="loan.status === 'OVERDUE'">
+                            {{ loan.status }}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="actions-column">
+                            <button class="btn-delete btn-circular-icon" (click)="onInfo(loan)" title="Ver Detalles">
+                                <img src="/icons/info.svg" alt="Info Icon" class="icon" width="16" height="16" />
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    } @else if (!isListLoading()) {
+    <p>No se encontró historial de préstamos.</p>
+    }
+</div>

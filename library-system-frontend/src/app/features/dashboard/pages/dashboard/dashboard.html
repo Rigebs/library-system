@@ -1,0 +1,49 @@
+<div class="dashboard-container">
+    <h2>Resumen General de la Biblioteca</h2>
+
+    @if (error()) {
+    <div class="alert alert-error">
+        {{ error() }}
+    </div>
+    }
+
+    @if (isLoading()) {
+    <p>Cargando datos del dashboard...</p>
+    } @else if (summary()) {
+    <div class="metric-cards">
+        <div class="card card-books">
+            <div class="icon-wrapper">
+                <img src="/icons/book.svg" alt="Book Icon" class="dashboard-icon" width="28" height="28" />
+            </div>
+            <h3>Libros Totales</h3>
+            <p class="metric-value">{{ summary()!.totalBooks }}</p>
+        </div>
+
+        <div class="card card-users">
+            <div class="icon-wrapper">
+                <img src="/icons/users.svg" alt="User Icon" class="dashboard-icon" width="28" height="28" />
+            </div>
+            <h3>Usuarios Registrados</h3>
+            <p class="metric-value">{{ summary()!.totalUsers }}</p>
+        </div>
+
+        <div class="card card-active-loans">
+            <div class="icon-wrapper">
+                <img src="/icons/check.svg" alt="Active Loans Icon" class="dashboard-icon" width="28" height="28" />
+            </div>
+            <h3>Préstamos Activos</h3>
+            <p class="metric-value">{{ summary()!.activeLoans }}</p>
+        </div>
+
+        <div class="card card-overdue-loans">
+            <div class="icon-wrapper">
+                <img src="/icons/alert.svg" alt="Overdue Loans Icon" class="dashboard-icon" width="28" height="28" />
+            </div>
+            <h3>Préstamos Vencidos</h3>
+            <p class="metric-value">{{ summary()!.overdueLoans }}</p>
+        </div>
+    </div>
+    } @else {
+    <p>No se pudieron cargar los datos del resumen.</p>
+    }
+</div>

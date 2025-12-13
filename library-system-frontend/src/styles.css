@@ -1,3 +1,18 @@
+:root {
+  --color-primary: #1e88e5; /* Azul institucional (Blue-600) */
+  --color-primary-dark: #1565c0;
+  --color-text-dark: #333333;
+  --color-text-light: #6c757d; /* Gris sutil */
+  --color-bg-base: #ffffff; /* Fondo blanco principal */
+  --color-bg-header: #f8f9fa; /* Fondo muy claro para el encabezado */
+  --color-border-default: #dee2e6; /* Borde muy claro (Gray-300) */
+  --color-hover-row: #f0f3f6; /* Hover de fila muy sutil */
+  --color-warn: #dc3545; /* Rojo de advertencia */
+  --radius-lg: 8px; /* Radio grande para el contenedor */
+  --radius-sm: 4px; /* Radio pequeño para botones */
+  --shadow-subtle: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* Sombra muy ligera */
+}
+
 *,
 *::before,
 *::after {
@@ -28,14 +43,12 @@ h2 {
   color: #1e293b;
   font-weight: 600;
   font-size: 2rem;
-  padding-bottom: 15px;
 }
 
 button {
   color: white;
   padding: 12px 20px;
   border: none;
-  border-radius: 6px;
   cursor: pointer;
   font-size: 1rem;
   font-weight: 600;
@@ -55,6 +68,7 @@ button:disabled {
 .icon {
   width: 16px;
   height: 16px;
+  filter: brightness(0) invert(1);
 }
 
 .btn-icon {
@@ -67,6 +81,7 @@ button:disabled {
 
 button {
   display: flex;
+  background-color: #3b82f6;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
@@ -158,18 +173,7 @@ textarea.ng-invalid.ng-touched {
 }
 
 @media (max-width: 600px) {
-  .container {
-    padding: 20px;
-    box-shadow: none;
-    border-radius: 0;
-    border: none;
-  }
-
   h2 {
     font-size: 1.5rem;
-  }
-
-  .back-button {
-    width: 100%;
   }
 }

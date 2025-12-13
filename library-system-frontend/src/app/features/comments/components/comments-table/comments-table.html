@@ -1,0 +1,34 @@
+<app-minimal-table [columns]="commentColumns" [data]="comments()" [actions]="commentActions" [isPaginable]="true">
+
+    <ng-template minimalTableCell="status" let-comment>
+        <span class="status-tag" [class]="comment.status">
+            @switch (comment.status) {
+            @case ('PENDING') { Pendiente }
+            @case ('APPROVED') { Aprobado }
+            @case ('REJECTED') { Rechazado }
+            @default { {{ comment.status }} }
+            }
+        </span>
+    </ng-template>
+
+    <ng-template minimalTableCell="book" let-comment>
+        <a [routerLink]="['/admin/books', comment.book.id]" class="book-link">
+            {{ comment.book?.title || 'N/A' }}
+        </a>
+    </ng-template>
+
+    <ng-template minimalTableCell="text" let-comment>
+        {{ comment.text.length > 80 ? (comment.text | slice:0:67) + '...' : comment.text }}
+    </ng-template>
+
+    <ng-template minimalTableCell="user" let-comment>
+        <a [routerLink]="['/admin/users', comment.user.id]" class="user-link">
+            {{ comment.user?.name || 'Anónimo' }}
+        </a>
+    </ng-template>
+
+    <ng-template minimalTableCell="createdAt" let-comment>
+        {{ comment.createdAt | date: 'dd/MM/yyyy' }}
+    </ng-template>
+
+</app-minimal-table>

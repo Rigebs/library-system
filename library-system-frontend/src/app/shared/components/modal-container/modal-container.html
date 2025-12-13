@@ -1,0 +1,9 @@
+@if (isOpen()) {
+<div class="modal-backdrop" (click)="onCloseRequested()"></div>
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <ng-content></ng-content>
+    </div>
+</div>
+}

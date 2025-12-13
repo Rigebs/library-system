@@ -1,0 +1,32 @@
+.status-tag {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: inline-block;
+  min-width: 70px;
+  text-align: center;
+  text-transform: uppercase;
+}
+.PENDING {
+  background-color: #ffc107;
+  color: #333;
+}
+.APPROVED {
+  background-color: #28a745;
+  color: white;
+}
+.REJECTED {
+  background-color: #dc3545;
+  color: white;
+}
+
+.book-link,
+.user-link {
+  color: var(--color-primary, #007bff);
+  text-decoration: none;
+}
+.book-link:hover,
+.user-link:hover {
+  text-decoration: underline;
+}

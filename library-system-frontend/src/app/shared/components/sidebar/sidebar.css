@@ -121,6 +121,10 @@
   margin-right: 10px;
 }
 
+.icon {
+  filter: invert(8%) sepia(85%) saturate(3022%) hue-rotate(224deg) brightness(30%) contrast(105%);
+}
+
 .nav-children {
   list-style: none;
   padding-left: 40px;

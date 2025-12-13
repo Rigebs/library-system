@@ -10,8 +10,8 @@
     @if (bookData.error) {
     <div class="alert alert-error">{{ bookData.error }}</div>
     } @else if (bookData.book) {
-    <app-book-form [initialData]="bookData.book" [isEditMode]="true" [isSubmitting]="isSubmitting()"
-        (formSubmit)="onSubmit($event)" />
+    <app-book-form [initialData]="bookData.book" [categories]="categories()" [isEditMode]="true"
+        [isSubmitting]="isSubmitting()" (formSubmit)="onSubmit($event)" />
     }
     } @else {
     <p>Loading book data...</p>

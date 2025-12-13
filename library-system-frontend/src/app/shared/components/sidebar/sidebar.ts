@@ -14,7 +14,7 @@ interface NavItem {
 
 const SIDEBAR_NAV_DATA: NavItem[] = [
   {
-    label: 'Dashboards',
+    label: 'Dashboard',
     icon: '/icons/home.svg',
     menuKey: 'dashboard',
     routerLink: '/admin/dashboard',
@@ -46,7 +46,8 @@ const SIDEBAR_NAV_DATA: NavItem[] = [
     children: [
       {
         label: 'Préstamos',
-        routerLink: '/admin/loans/active',
+        routerLink: '/admin/loans',
+        exactLink: true,
       },
       {
         label: 'Historial Completo',

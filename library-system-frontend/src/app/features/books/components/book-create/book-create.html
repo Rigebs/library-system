@@ -5,5 +5,6 @@
     </button>
 
     <h2>Create New Book</h2>
-    <app-book-form [isEditMode]="false" [isSubmitting]="isSubmitting()" (formSubmit)="onSubmit($event)" />
+    <app-book-form [categories]="categories()" [isEditMode]="false" [isSubmitting]="isSubmitting()"
+        (formSubmit)="onSubmit($event)" />
 </div>

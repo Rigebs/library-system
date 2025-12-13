@@ -5,6 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { UserFormComponent } from '../user-form/user-form';
 import { UserService } from '../../user.service';
 import { UserRequest } from '../../../../core/auth/auth.models';
+import { User } from '../../../../core/models/user.model';
 
 @Component({
   selector: 'app-user-create',
@@ -24,18 +25,17 @@ export class UserCreateComponent {
     this.isLoading.set(true);
 
     this.userService.createUser(event.data).subscribe({
-      next: (response) => {
+      next: (createdUser: User) => {
         this.isLoading.set(false);
-        if (response.success) {
-          alert('Usuario creado exitosamente.');
-          this.router.navigate(['/dashboard']);
-        } else {
-          this.errorMessage.set(response.message || 'Error desconocido al crear usuario.');
-        }
+        alert(`Usuario ${createdUser.name} creado exitosamente.`);
+        this.router.navigate(['/dashboard']);
       },
-      error: (error: HttpErrorResponse) => {
+      error: (error: unknown) => {
         this.isLoading.set(false);
-        const msg = error.error?.message || 'Error de conexión con el servidor.';
+        const msg =
+          (error as Error).message ||
+          (error as HttpErrorResponse).error?.message ||
+          'Error de conexión con el servidor.';
         this.errorMessage.set(`Fallo en la creación: ${msg}`);
       },
     });

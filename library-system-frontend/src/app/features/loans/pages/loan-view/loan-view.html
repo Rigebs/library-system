@@ -1,0 +1,46 @@
+<div class="container" style="max-width: 700px;">
+    <button class="back-button" (click)="router.navigate(['/admin/loans'])">
+        <img src="/icons/arrow-left.svg" alt="Back" class="icon-back" />
+        Volver a la Lista
+    </button>
+
+    <h2>Detalle del Préstamo #{{ loanId() }}</h2>
+
+    @if (loanData$ | async; as loanData) {
+    @if (loanData.error) {
+    <div class="alert alert-error">{{ loanData.error }}</div>
+    } @else if (loanData.loan) {
+    <div class="loan-details" style="margin-top: 20px;">
+        <p>Usuario: <b>{{ loanData.loan.user.name }} (ID: {{ loanData.loan.user.id }})</b></p>
+        <p>Libro: <b>{{ loanData.loan.book.title }} (ID: {{ loanData.loan.book.id }})</b></p>
+        <p>Fecha de Préstamo: <b>{{ loanData.loan.loanDate | date: 'medium' }}</b></p>
+        <p>Devolución Esperada: <b>{{ loanData.loan.expectedReturnDate | date: 'medium' }}</b></p>
+        <p>Fecha de Devolución Real: <b>{{ loanData.loan.actualReturnDate ? (loanData.loan.actualReturnDate | date:
+                'medium') : 'Pendiente' }}</b></p>
+
+        <p>Estado Actual:
+            <span class="loan-status-badge" [class.active]="loanData.loan.status === 'ACTIVE'"
+                [class.returned]="loanData.loan.status === 'RETURNED'"
+                [class.overdue]="loanData.loan.status === 'OVERDUE'">
+                {{ loanData.loan.status }}
+            </span>
+        </p>
+    </div>
+
+    @if (loanData.loan.status === 'ACTIVE' || loanData.loan.status === 'OVERDUE') {
+    <button class="return-button" (click)="onReturnLoan()" [disabled]="isSubmitting()">
+        @if (isSubmitting()) {
+        Registrando Devolución...
+        } @else {
+        Registrar Devolución
+        }
+    </button>
+    }
+
+    } @else {
+    <p>Cargando datos del préstamo...</p>
+    }
+    } @else {
+    <p>Cargando datos del préstamo...</p>
+    }
+</div>

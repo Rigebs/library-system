@@ -1,0 +1,83 @@
+<div class="table-wrapper">
+    <table>
+        <thead>
+            <tr>
+                @for (col of columns(); track col.key) {
+                <th [class.sortable]="col.isSortable" [class.active-sort]="col.key === sortColumn()"
+                    (click)="toggleSort(col)" scope="col">
+                    <div class="header-content">
+                        {{ col.header }}
+                        @if (col.key === sortColumn()) {
+                        <span class="sort-icon">
+                            @if (sortDirection() === 'asc') {
+                            &#9650; } @else if (sortDirection() === 'desc') {
+                            &#9660; }
+                        </span>
+                        }
+                    </div>
+                </th>
+                }
+            </tr>
+        </thead>
+
+        <tbody>
+            @for (item of paginatedData(); track $index) {
+            <tr>
+                @for (col of columns(); track col.key) {
+                <td>
+
+                    @if (templateMap().has(col.key)) {
+                    <ng-container [ngTemplateOutlet]="templateMap().get(col.key)"
+                        [ngTemplateOutletContext]="{ $implicit: item, row: item, column: col.key }"></ng-container>
+                    }
+
+                    @else if (col.key === 'actions') {
+                    <div class="action-buttons">
+                        @for (action of actions(); track action.label) {
+                        @if (!action.isHidden || !action.isHidden(item)) {
+                        <button (click)="action.onClick(item)" [class]="'btn-' + (action.color || 'default')"
+                            title="{{ action.label }}">
+
+                            @if (action.icon) {
+                            <img [src]="action.icon" alt="{{ action.label }} Icon" width="16" height="16"
+                                class="action-icon" />
+                            } @else {
+                            <span>{{ action.label }}</span>
+                            }
+                        </button>
+                        }
+                        }
+                    </div>
+                    } @else {
+                    {{ item[col.key] }}
+                    }
+                </td>
+                }
+            </tr>
+            } @empty {
+            <tr>
+                <td [attr.colspan]="columns().length" class="no-data">
+                    No hay datos para mostrar.
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@if (isPaginable()) {
+<div class="pagination-controls">
+    <button (click)="goToPage(currentPage() - 1)" [disabled]="currentPage() === 1">
+        Anterior
+    </button>
+    <span class="page-info">Página {{ currentPage() }} de {{ totalPages() }}</span>
+    <button (click)="goToPage(currentPage() + 1)" [disabled]="currentPage() === totalPages()">
+        Siguiente
+    </button>
+    <select [value]="pageSize()" (change)="setPageSize($event)" title="Elementos por página">
+        @for (size of availablePageSizes; track size) {
+        <option [value]="size" [selected]="size === pageSize()">{{ size }} por página</option>
+        }
+    </select>
+</div>
+}

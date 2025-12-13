@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-  OnInit,
-  WritableSignal,
-  signal,
-} from '@angular/core';
+import { Component, inject, OnInit, WritableSignal, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../user.service';
@@ -25,16 +18,13 @@ export class UserEditComponent implements OnInit {
   private userService = inject(UserService);
   private router = inject(Router);
 
-  // --- GESTIÓN DE ESTADO CON SIGNALS ---
   public isLoading: WritableSignal<boolean> = signal(true);
   public isSaving: WritableSignal<boolean> = signal(false);
   public errorMessage: WritableSignal<string | null> = signal(null);
 
-  // Signal para almacenar el usuario cargado
   public userToEdit: WritableSignal<User | null> = signal(null);
 
   ngOnInit(): void {
-    // 1. Obtener el ID de la URL
     const userId = Number(this.route.snapshot.paramMap.get('id'));
 
     if (isNaN(userId)) {
@@ -43,28 +33,23 @@ export class UserEditComponent implements OnInit {
       return;
     }
 
-    // 2. Cargar el usuario
     this.userService
       .getUserById(userId)
       .pipe(finalize(() => this.isLoading.set(false)))
       .subscribe({
-        next: (response) => {
-          if (response.success && response.data) {
-            this.userToEdit.set(response.data); // Almacenar datos en la Signal
-          } else {
-            this.errorMessage.set(response.message || 'No se pudo cargar el usuario.');
-          }
+        next: (user: User) => {
+          this.userToEdit.set(user);
         },
-        error: (error: HttpErrorResponse) => {
-          this.errorMessage.set(error.error?.message || 'Error al conectar con el servidor.');
+        error: (error: HttpErrorResponse | Error) => {
+          const msg =
+            (error as Error).message ||
+            (error as HttpErrorResponse).error?.message ||
+            'Error al conectar con el servidor.';
+          this.errorMessage.set(msg);
         },
       });
   }
 
-  /**
-   * Maneja el evento 'save' emitido por UserFormComponent.
-   * Llama al servicio para actualizar el usuario.
-   */
   onUpdate(event: { id?: number; data: any }): void {
     const userId = event.id;
     const userData = event.data;
@@ -78,20 +63,20 @@ export class UserEditComponent implements OnInit {
     this.isSaving.set(true);
 
     this.userService.updateUser(userId, userData).subscribe({
-      next: (response) => {
+      next: (updatedUser: User) => {
         this.isSaving.set(false);
-        if (response.success) {
-          alert('Usuario actualizado exitosamente.');
-          this.router.navigate(['/dashboard']); // Redirigir a la lista
-        } else {
-          this.errorMessage.set(response.message || 'Error al actualizar el usuario.');
-        }
-      },
-      error: (error: HttpErrorResponse) => {
+
+        alert('Usuario actualizado exitosamente.');
+        this.router.navigate(['/dashboard']);
+        this.userToEdit.set(updatedUser);
+      }, // 💡 Pequeña corrección para tipado de error, para manejar tanto Error como HttpErrorResponse
+      error: (error: HttpErrorResponse | Error) => {
         this.isSaving.set(false);
-        this.errorMessage.set(
-          error.error?.message || 'Error de conexión con el servidor durante la actualización.'
-        );
+        const msg =
+          (error as Error).message || // Error lanzado desde el service
+          (error as HttpErrorResponse).error?.message ||
+          'Error de conexión con el servidor durante la actualización.';
+        this.errorMessage.set(msg);
       },
     });
   }

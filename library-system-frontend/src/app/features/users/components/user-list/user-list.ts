@@ -41,7 +41,6 @@ export class UserListComponent implements OnInit {
       .subscribe({
         next: (response) => {
           if (response.success) {
-            // El servicio ya actualiza la Signal 'users'
             alert(`Usuario ${userId} eliminado con éxito.`);
           } else {
             this.deleteError.set(response.message || 'Fallo al eliminar el usuario.');

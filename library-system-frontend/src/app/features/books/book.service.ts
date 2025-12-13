@@ -1,13 +1,8 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { Book, BookPayload } from './models/book.model';
-import { catchError, of, tap, map } from 'rxjs';
+import { catchError, of, tap, map, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-
-interface ApiResponse<T> {
-  success: boolean;
-  message: string;
-  data: T;
-}
+import { ApiResponse } from '../../core/auth/auth.models';
 
 interface BookState {
   books: Book[];
@@ -32,15 +27,13 @@ export class BookService {
   public isLoading = computed(() => this.state().isLoading);
   public error = computed(() => this.state().error);
 
-  constructor() {}
-
   loadBooks(): void {
     this.state.update((s) => ({ ...s, isLoading: true, error: null }));
 
     this.http
       .get<ApiResponse<Book[]>>(this.apiUrl)
       .pipe(
-        map((response) => response.data),
+        map((response) => response.data || []),
         catchError((err) => {
           console.error('Error loading books:', err);
           this.state.update((s) => ({
@@ -48,7 +41,7 @@ export class BookService {
             isLoading: false,
             error: 'Failed to load books. Please try again.',
           }));
-          return of([]);
+          return of([] as Book[]);
         })
       )
       .subscribe((books) => {
@@ -60,15 +53,25 @@ export class BookService {
       });
   }
 
-  getBookById(id: number) {
-    return this.http
-      .get<ApiResponse<Book>>(`${this.apiUrl}/${id}`)
-      .pipe(map((response) => response.data));
+  getBookById(id: number): Observable<Book> {
+    return this.http.get<ApiResponse<Book>>(`${this.apiUrl}/${id}`).pipe(
+      map((response) => {
+        if (!response.success || !response.data) {
+          throw new Error(response.message || 'No se pudo obtener el libro.');
+        }
+        return response.data;
+      })
+    );
   }
 
-  createBook(payload: BookPayload) {
+  createBook(payload: BookPayload): Observable<Book> {
     return this.http.post<ApiResponse<Book>>(this.apiUrl, payload).pipe(
-      map((response) => response.data),
+      map((response) => {
+        if (!response.success || !response.data) {
+          throw new Error(response.message || 'Error al crear el libro.');
+        }
+        return response.data;
+      }),
       tap((newBook) => {
         this.state.update((s) => ({
           ...s,
@@ -78,9 +81,14 @@ export class BookService {
     );
   }
 
-  updateBook(id: number, payload: BookPayload) {
+  updateBook(id: number, payload: BookPayload): Observable<Book> {
     return this.http.put<ApiResponse<Book>>(`${this.apiUrl}/${id}`, payload).pipe(
-      map((response) => response.data),
+      map((response) => {
+        if (!response.success || !response.data) {
+          throw new Error(response.message || 'Error al actualizar el libro.');
+        }
+        return response.data;
+      }),
       tap((updatedBook) => {
         this.state.update((s) => ({
           ...s,
@@ -90,8 +98,14 @@ export class BookService {
     );
   }
 
-  deleteBook(id: number) {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`).pipe(
+  deleteBook(id: number): Observable<void> {
+    return this.http.delete<ApiResponse<void>>(`${this.apiUrl}/${id}`).pipe(
+      map((response) => {
+        if (!response.success) {
+          throw new Error(response.message || 'Error al eliminar el libro.');
+        }
+        return undefined;
+      }),
       tap(() => {
         this.state.update((s) => ({
           ...s,

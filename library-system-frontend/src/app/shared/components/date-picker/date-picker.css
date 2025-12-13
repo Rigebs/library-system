@@ -1,0 +1,75 @@
+.date-picker-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  padding: 2px;
+}
+.date-input {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: white;
+  transition: border-color 0.2s;
+  user-select: none;
+  min-height: 20px;
+  color: #333;
+}
+.date-input:hover {
+  border-color: #999;
+}
+.date-input.active {
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+.date-text {
+  flex-grow: 1;
+}
+
+.calendar-icon {
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
+  background-image: url('/icons/calendar.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  flex-shrink: 0;
+}
+
+.calendar-popup {
+  position: absolute;
+  z-index: 1000;
+  top: 100%;
+  left: 0;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  background-color: white;
+  padding: 5px;
+}
+
+.date-text-input {
+  flex-grow: 1;
+  border: none;
+  padding: 0;
+  margin: 0;
+  background: none;
+  outline: none; /* Quitamos el foco por defecto del input, lo maneja el contenedor */
+  font-size: 1em; /* Asegura que el texto sea visible */
+  color: inherit;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: none;
+  outline: none;
+  box-shadow: none;
+}

@@ -1,0 +1,20 @@
+.form-actions {
+  /* 💡 Asegura que los botones se muestren uno al lado del otro */
+  display: flex;
+  gap: 10px; /* Espacio entre los botones */
+  justify-content: flex-end; /* Alinea los botones a la derecha del formulario */
+  margin-top: 20px;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+}

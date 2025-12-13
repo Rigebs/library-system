@@ -1,0 +1,41 @@
+<div class="list-panel">
+
+    @if (error()) {
+    <div class="alert alert-error">{{ error() }}</div>
+    } @else if (isLoading()) {
+    <p>Cargando categorías...</p>
+    } @else if (categories().length === 0) {
+    <p>No se encontraron categorías registradas.</p>
+    } @else {
+    <div class="table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (category of categories(); track category.id) {
+                <tr>
+                    <td>{{ category.id }}</td>
+                    <td>{{ category.name }}</td>
+                    <td>
+                        <div class="actions-column">
+                            <button class="btn-circular-icon btn-edit" (click)="onEdit(category)" title="Editar">
+                                <img src="/icons/edit.svg" alt="Edit" width="16" height="16" />
+                            </button>
+                            <button class="btn-circular-icon btn-delete" (click)="onDelete(category.id, category.name)"
+                                title="Eliminar" [disabled]="isDeleting()">
+                                <img src="/icons/delete.svg" alt="Delete" width="16" height="16" />
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    }
+</div>

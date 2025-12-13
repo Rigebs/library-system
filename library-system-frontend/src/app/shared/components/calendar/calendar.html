@@ -1,0 +1,33 @@
+<div class="calendar-container">
+    <div class="header">
+        <button (click)="previousMonth()" class="nav-button">
+            <img src="/icons/arrow-left.svg" alt="Mes Anterior" class="nav-icon">
+        </button>
+
+        <select id="year-selector" class="year-selector" [ngModel]="currentYear()" (ngModelChange)="selectYear($event)">
+            @for (year of availableYears(); track year) {
+            <option [value]="year">{{ year }}</option>
+            }
+        </select>
+        <h2 class="month-label">{{ currentMonthLabel() }}</h2>
+
+        <button (click)="nextMonth()" class="nav-button">
+            <img src="/icons/arrow-right.svg" alt="Mes Siguiente" class="nav-icon">
+        </button>
+    </div>
+
+    <div class="weekdays">
+        @for (dayName of weekdayNames; track dayName) {
+        <span>{{ dayName }}</span>
+        }
+    </div>
+
+    <div class="days-grid">
+        @for (day of daysInMonth(); track day.date.getTime()) {
+        <button class="day-cell" [class.selected]="day.isSelected" [class.current-month]="day.isCurrentMonth"
+            (click)="selectDay(day.date)">
+            {{ day.dayOfMonth }}
+        </button>
+        }
+    </div>
+</div>

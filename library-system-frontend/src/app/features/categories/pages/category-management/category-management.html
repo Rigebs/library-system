@@ -1,0 +1,40 @@
+<div class="management-container">
+    <header class="management-header">
+        <h2>Gestión de Categorías</h2>
+        <button class="btn btn-primary" (click)="openCreateDialog()">
+            + Nueva Categoría
+        </button>
+    </header>
+
+    @if (globalError()) {
+    <div class="alert alert-error">{{ globalError() }}</div>
+    }
+    @if (successMessage()) {
+    <div class="alert alert-success">{{ successMessage() }}</div>
+    }
+
+    <app-category-list [categories]="categories()" [isLoading]="isLoading()" [error]="error()"
+        (editCategory)="onEditCategory($event)" (categoryDeleted)="onCategoryDeleted($event)" />
+
+    @if (isDialogOpen()) {
+    <div class="dialog-backdrop" (click)="closeDialog()">
+        <div class="dialog-content" (click)="$event.stopPropagation()">
+
+            <div class="dialog-header">
+                <h3>
+                    @if (selectedCategory()) {
+                    Editar Categoría
+                    } @else {
+                    Registrar Nueva Categoría
+                    }
+                </h3>
+
+                <button class="close-dialog-btn" (click)="closeDialog()">×</button>
+            </div>
+
+            <app-category-form [selectedCategory]="selectedCategory()" (categorySaved)="onCategorySaved($event)"
+                [cancelCallback]="closeDialog" />
+        </div>
+    </div>
+    }
+</div>
