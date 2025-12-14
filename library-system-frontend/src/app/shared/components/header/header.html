@@ -1,23 +1,44 @@
 <header class="app-header">
-    <div class="logo">
-        <a [routerLink]="['/']">
+    <div class="logo-wrapper">
+        <a [routerLink]="['/']" class="logo-link">
             <span class="app-title">Biblioteca Digital</span>
         </a>
     </div>
 
-    <div class="actions">
-        @if (isLoggedIn()) {
-        <div class="user-info">
-            @if (currentUser(); as user) {
-            <span>Hola, <strong>{{ user.email }}</strong></span>
-            }
-        </div>
-
-        <button class="btn-logout" (click)="logout()">
-            Cerrar Sesión
+    <div class="mobile-controls">
+        <button class="icon-btn search-toggle" (click)="toggleSearch()" [class.is-active]="isSearchVisible()">
+            <img src="/icons/search.svg" alt="Abrir/Cerrar Búsqueda" width="24" height="24" />
         </button>
+
+        <button class="icon-btn menu-toggle" (click)="toggleMenu()" [class.is-active]="isMenuOpen()">
+            <img src="/icons/menu.svg" alt="Abrir/Cerrar Menú" width="24" height="24" />
+        </button>
+    </div>
+
+    <div class="search-wrapper" [class.mobile-visible]="isSearchVisible()">
+        <app-book-search />
+    </div>
+
+    <div class="actions" [class.mobile-visible]="isMenuOpen()">
+        @if (isLoggedIn()) {
+        <div class="user-menu-container" [class.open]="isMenuOpen()">
+            <button class="icon-btn user-profile-toggle" (click)="toggleMenu()">
+                <img src="/icons/user.svg" alt="Menú de Usuario" width="24" height="24" />
+            </button>
+
+            <div class="user-dropdown-menu">
+                @if (isAdmin()) {
+                <a [routerLink]="['/admin/dashboard']" class="dropdown-item">
+                    Panel de Administración
+                </a>
+                }
+                <button class="dropdown-item logout-item" (click)="logout()">
+                    Cerrar Sesión
+                </button>
+            </div>
+        </div>
         } @else {
-        <a [routerLink]="['/auth/login']" class="btn-login">
+        <a [routerLink]="['/auth/login']" class="btn btn-login">
             Iniciar Sesión
         </a>
         }

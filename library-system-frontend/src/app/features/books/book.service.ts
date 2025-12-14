@@ -1,13 +1,19 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { Book, BookPayload } from './models/book.model';
 import { catchError, of, tap, map, Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { ApiResponse } from '../../core/auth/auth.models';
+
+export interface SearchCriteria {
+  term: string;
+  field: 'all' | 'title' | 'author' | 'isbn' | 'publisher' | 'category';
+}
 
 interface BookState {
   books: Book[];
   isLoading: boolean;
   error: string | null;
+  currentSearchTerm: string | null;
 }
 
 @Injectable({
@@ -21,25 +27,45 @@ export class BookService {
     books: [],
     isLoading: false,
     error: null,
+    currentSearchTerm: null,
   });
 
   public books = computed(() => this.state().books);
   public isLoading = computed(() => this.state().isLoading);
   public error = computed(() => this.state().error);
 
+  public currentSearchTerm = computed(() => this.state().currentSearchTerm);
+
   loadBooks(): void {
-    this.state.update((s) => ({ ...s, isLoading: true, error: null }));
+    this.searchBooks({ term: '', field: 'all' });
+  }
+
+  searchBooks(criteria: SearchCriteria): void {
+    const isInitialLoad = !criteria.term;
+
+    this.state.update((s) => ({
+      ...s,
+      isLoading: true,
+      error: null,
+      currentSearchTerm: isInitialLoad ? null : criteria.term,
+    }));
+
+    let params = new HttpParams();
+    if (criteria.term) {
+      params = params.set('term', criteria.term);
+      params = params.set('field', criteria.field);
+    }
 
     this.http
-      .get<ApiResponse<Book[]>>(this.apiUrl)
+      .get<ApiResponse<Book[]>>(this.apiUrl, { params })
       .pipe(
         map((response) => response.data || []),
         catchError((err) => {
-          console.error('Error loading books:', err);
           this.state.update((s) => ({
             ...s,
             isLoading: false,
-            error: 'Failed to load books. Please try again.',
+            error: 'Failed to search books. Please try again.',
+            currentSearchTerm: null,
           }));
           return of([] as Book[]);
         })

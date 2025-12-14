@@ -1,0 +1,24 @@
+<form class="search-form" [formGroup]="searchForm" (ngSubmit)="onSubmit()" autocomplete="off">
+    <div class="input-group">
+        <input type="text" formControlName="term" placeholder="Buscar por Título, Autor, ISBN..."
+            class="search-input" />
+
+        <div class="select-wrapper">
+            <select formControlName="field" class="search-select">
+                @for (field of searchFields; track field.value) {
+                <option [value]="field.value">{{ field.label }}</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    @if (searchForm.get('term')?.value) {
+    <button type="submit" class="btn-search" [disabled]="searchForm.invalid">
+        Buscar
+    </button>
+
+    <button type="button" class="btn-clear" (click)="clearSearch()">
+        Limpiar
+    </button>
+    }
+</form>

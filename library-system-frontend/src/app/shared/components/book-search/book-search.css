@@ -1,0 +1,128 @@
+.search-form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.input-group {
+  display: flex;
+  flex-grow: 1;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #ffffff;
+}
+
+.search-input {
+  flex-grow: 1;
+  padding: 10px 15px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  color: #374151;
+}
+
+.select-wrapper {
+  position: relative;
+  border-left: 1px solid #d1d5db;
+  background-color: #f9fafb;
+  cursor: pointer;
+}
+
+.search-select {
+  padding: 10px 30px 10px 10px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #374151;
+  height: 100%;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.select-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+  transform: translateY(-50%);
+  background-image: url('/icons/arrow-down.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.btn-search {
+  background-color: #059669;
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-search:hover {
+  background-color: #047857;
+  transform: translateY(-1px);
+}
+
+.btn-search:disabled {
+  background-color: #a7f3d0;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-clear {
+  background-color: #f3f4f6;
+  color: #4b5563;
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.btn-clear:hover {
+  background-color: #e5e7eb;
+  border-color: #d1d5db;
+}
+
+.error-message {
+  color: #ef4444;
+  font-size: 0.85rem;
+  margin-top: 5px;
+  margin-left: 15px;
+}
+
+@media (max-width: 600px) {
+  .search-form {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .input-group {
+    flex-basis: 100%;
+    order: 1;
+  }
+
+  .btn-search {
+    flex-basis: calc(50% - 4px);
+    flex-grow: 1;
+    order: 2;
+    padding: 12px 15px;
+  }
+
+  .btn-clear {
+    flex-basis: calc(50% - 4px);
+    flex-grow: 1;
+    order: 3;
+    padding: 12px 15px;
+  }
+}

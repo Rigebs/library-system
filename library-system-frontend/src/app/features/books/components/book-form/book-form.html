@@ -50,21 +50,86 @@
     </div>
 
     <div class="form-group">
-        <label for="coverUrl">URL de la Cubierta</label>
-        <input type="text" id="coverUrl" formControlName="coverUrl" placeholder="http://ejemplo.com/portada.jpg" />
-        <small>Esta URL será utilizada con NgOptimizedImage (requiere dominios de confianza). Si la imagen es un
-            activo
-            estático, use una ruta relativa.</small>
-        @if (hasError('coverUrl', 'required')) {
-        <p class="error-message">La URL de la cubierta es obligatoria.</p>
+        <label>Archivo Digital</label>
+
+        <div class="upload-card" [class.uploading]="isFileUploading()" [class.success]="bookForm.get('fileUrl')?.value">
+            <input type="file" accept=".pdf,.epub,application/pdf,application/epub+zip"
+                (change)="onFileUpload($event, 'file')" [disabled]="isFileUploading()" />
+
+            <!-- Estado: Idle -->
+            @if (!isFileUploading() && !bookForm.get('fileUrl')?.value) {
+            <div class="upload-placeholder">
+                <span class="title">Subir archivo PDF o EPUB</span>
+                <span class="subtitle">Haz clic para seleccionar el archivo</span>
+            </div>
+            }
+
+            <!-- Estado: Uploading -->
+            @if (isFileUploading()) {
+            <div class="upload-status">
+                <div class="spinner"></div>
+                <span>Subiendo archivo...</span>
+            </div>
+            }
+
+            @if (bookForm.get('fileUrl')?.value && !isFileUploading()) {
+            <div class="upload-success file-success">
+                <img src="/icons/file.svg" alt="Archivo" class="file-icon" />
+
+                <div class="file-info">
+                    <span class="file-name">
+                        {{ uploadedFileName() }}
+                    </span>
+                    @if (!isEditMode()) {
+
+                    <span class="file-status">Archivo cargado correctamente</span>
+                    }
+                </div>
+            </div>
+            }
+        </div>
+
+        <input type="hidden" formControlName="fileUrl" />
+
+        @if (hasError('fileUrl', 'required')) {
+        <p class="error-message">Debe cargar el archivo digital.</p>
         }
     </div>
 
     <div class="form-group">
-        <label for="fileUrl">Ruta/URL de Descarga</label>
-        <input type="text" id="fileUrl" formControlName="fileUrl" placeholder="/assets/books/mi-libro.pdf" />
-        @if (hasError('fileUrl', 'required')) {
-        <p class="error-message">La ruta/URL del archivo es obligatoria.</p>
+        <label>Portada del Libro</label>
+
+        <div class="upload-card image-card" [class.uploading]="isCoverUploading()"
+            [class.success]="bookForm.get('coverUrl')?.value">
+            <input type="file" accept="image/jpeg,image/png" (change)="onFileUpload($event, 'cover')"
+                [disabled]="isCoverUploading()" />
+
+            <!-- Preview -->
+            @if (bookForm.get('coverUrl')?.value && !isCoverUploading()) {
+            <img class="image-preview" [src]="bookForm.get('coverUrl')?.value" alt="Vista previa de portada" />
+            }
+
+            <!-- Uploading -->
+            @if (isCoverUploading()) {
+            <div class="upload-status">
+                <div class="spinner"></div>
+                <span>Subiendo portada...</span>
+            </div>
+            }
+
+            <!-- Placeholder -->
+            @if (!bookForm.get('coverUrl')?.value && !isCoverUploading()) {
+            <div class="upload-placeholder">
+                <span class="title">Subir imagen de portada</span>
+                <span class="subtitle">JPG o PNG</span>
+            </div>
+            }
+        </div>
+
+        <input type="hidden" formControlName="coverUrl" />
+
+        @if (hasError('coverUrl', 'required')) {
+        <p class="error-message">Debe cargar la portada.</p>
         }
     </div>
 

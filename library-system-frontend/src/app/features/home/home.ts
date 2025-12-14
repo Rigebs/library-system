@@ -15,6 +15,7 @@ export class HomeComponent implements OnInit {
   public readonly availableBooks = this.bookService.books;
   public readonly isLoading = this.bookService.isLoading;
   public readonly loadingError = this.bookService.error;
+  public readonly currentSearchTerm = this.bookService.currentSearchTerm;
 
   readonly visits = signal(0);
   readonly appName = 'Biblioteca Digital';

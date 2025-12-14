@@ -1,68 +1,279 @@
+/* --- APP-HEADER Y ESTRUCTURA GENERAL --- */
 .app-header {
   display: flex;
+  gap: 2rem;
   justify-content: space-between;
   align-items: center;
   padding: 15px 40px;
   background-color: #ffffff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  position: sticky;
   top: 0;
   z-index: 100;
 }
 
-.logo a {
+.mobile-controls {
+  display: none;
+}
+
+.logo-link {
   text-decoration: none;
   color: inherit;
+  display: flex;
+  align-items: center;
 }
 
 .app-title {
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: 1.6rem;
   color: #1e293b;
+  letter-spacing: -0.5px;
+}
+
+.search-wrapper {
+  flex-grow: 1;
+  max-width: 600px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-shrink: 0;
+}
+
+/* --- BOTONES DE ACCIÓN (LOGIN/LOGOUT/ADMIN) --- */
+.btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  border: none;
+  text-decoration: none;
+  display: inline-block;
 }
 
 .btn-logout {
   background-color: #ef4444;
-  padding: 8px 15px;
-  width: auto;
-  margin: 0;
-  font-weight: 500;
-  box-shadow: none;
+  color: #ffffff;
 }
 
 .btn-logout:hover {
   background-color: #dc2626;
-}
-
-.user-info {
-  margin-right: 20px;
-  font-size: 0.95rem;
-  color: #374151;
+  transform: translateY(-1px);
 }
 
 .btn-login {
   background-color: #3b82f6;
   color: #fff;
-  padding: 8px 15px;
-  border-radius: 6px;
-  text-decoration: none;
-  font-weight: 500;
-  transition: background-color 0.2s;
-  display: inline-block;
 }
 
 .btn-login:hover {
   background-color: #2563eb;
+  transform: translateY(-1px);
 }
 
-@media (max-width: 600px) {
+.btn-admin {
+  background-color: #6b7280;
+  color: #ffffff;
+}
+
+.btn-admin:hover {
+  background-color: #4b5563;
+  transform: translateY(-1px);
+}
+
+/* --- MENÚ DE USUARIO (DROPDOWN) --- */
+.user-menu-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.user-profile-toggle {
+  border: 1px solid #d1d5db;
+  border-radius: 50%;
+  padding: 8px;
+  background-color: #f3f4f6;
+  transition: all 0.2s;
+}
+
+.user-profile-toggle:hover {
+  background-color: #e5eeef;
+}
+
+.user-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 10px;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 110;
+  min-width: 200px;
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+}
+
+.user-menu-container.open .user-dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 10px 15px;
+  text-align: left;
+  text-decoration: none;
+  color: #374151;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background-color 0.15s;
+}
+
+.dropdown-item:hover {
+  background-color: #f3f4f6;
+}
+
+.logout-item {
+  color: #ef4444;
+  border-top: 1px solid #e5e7eb;
+}
+
+.logout-item:hover {
+  background-color: #fee2e2;
+}
+
+/* --- RESPONSIVIDAD (HEADER Y BÚSQUEDA) --- */
+@media (max-width: 900px) {
+  /* HEADER */
   .app-header {
-    padding: 10px 10px;
+    flex-wrap: nowrap;
+    padding: 10px 15px;
+    gap: 10px;
+    align-items: center;
   }
-  .app-title {
-    font-size: 1.2rem;
+
+  .mobile-controls {
+    display: flex;
+    gap: 5px;
+    order: 3;
+    align-items: center;
   }
-  .btn-logout {
-    padding: 6px 10px;
-    font-size: 0.85rem;
+
+  .icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    transition: all 0.2s ease-in-out;
+    border-radius: 50%;
+  }
+
+  .icon-btn img {
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .actions.mobile-visible {
+    gap: 10px;
+  }
+
+  .logo-wrapper {
+    order: 1;
+    margin-right: auto;
+  }
+
+  .actions.mobile-visible .user-menu-container {
+    position: static;
+    width: 100%;
+    margin: 0;
+    display: block;
+    border: none;
+  }
+
+  .actions.mobile-visible .user-profile-toggle {
+    display: none;
+  }
+
+  .actions.mobile-visible .user-dropdown-menu {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    box-shadow: none;
+    border: none;
+    margin-top: 0;
+    min-width: 100%;
+    padding: 0;
+    border-radius: 0;
+  }
+
+  .actions.mobile-visible .dropdown-item {
+    padding: 12px 15px;
+    border-radius: 0;
+  }
+
+  .actions.mobile-visible .logout-item {
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .actions.mobile-visible .btn-login {
+    width: 100%;
+    text-align: center;
+  }
+
+  .search-toggle.is-active {
+    background-color: #f3f4f6;
+  }
+
+  .search-toggle.is-active img {
+    filter: brightness(0.5);
+  }
+
+  .menu-toggle.is-active {
+    background-color: #f3f4f6;
+  }
+
+  .menu-toggle.is-active img {
+    transform: rotate(90deg);
+  }
+
+  /* BÚSQUEDA */
+  @media (max-width: 600px) {
+    .search-form {
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .input-group {
+      flex-basis: 100%;
+      order: 1;
+    }
+
+    .btn-search {
+      flex-basis: calc(50% - 4px);
+      flex-grow: 1;
+      order: 2;
+      padding: 12px 15px;
+    }
+
+    .btn-clear {
+      flex-basis: calc(50% - 4px);
+      flex-grow: 1;
+      order: 3;
+      padding: 12px 15px;
+    }
   }
 }

@@ -20,16 +20,14 @@ export class AuthService {
 
   public isLoggedIn: Signal<boolean> = computed(() => !!this.accessTokenSignal());
 
+  public isUserAdmin: Signal<boolean> = computed(() => this.currentUser()?.role === Role.ADMIN);
+
   public currentUser: WritableSignal<UserResponse | null> = signal(null);
 
   private isRefreshing: boolean = false;
   private refreshTokenSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(
     null
   );
-
-  constructor() {
-    console.log('AuthService inicializado. Sesión activa:', this.isLoggedIn());
-  }
 
   private getStoredAccessToken(): string | null {
     return localStorage.getItem('access_token');

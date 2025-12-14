@@ -23,7 +23,23 @@
         <h2>Catálogo de Libros Disponibles</h2>
 
         @if (isLoading()) {
-        <p class="loading-message">Cargando libros... ⏳</p>
+        <p class="loading-message">
+            <img src="/icons/loading.svg" alt="Cargando" class="icon-loading" width="24" height="24" />
+            Cargando libros...
+        </p>
+        }
+
+        @if (loadingError()) {
+        <p class="error-message">{{ loadingError() }}</p>
+        }
+
+        @if (!isLoading() && !loadingError() && availableBooks().length === 0 && currentSearchTerm()) {
+        <div class="no-results-message">
+            <img src="/icons/search-off.svg" alt="Sin resultados" class="icon-no-results" width="40" height="40" />
+            <h3>No se encontraron resultados</h3>
+            <p>No hay libros que coincidan con la búsqueda: <strong>"{{ currentSearchTerm() }}"</strong>.</p>
+            <p class="suggestion">Intenta una búsqueda diferente o verifica la ortografía.</p>
+        </div>
         }
 
         @if (!isLoading() && !loadingError() && availableBooks().length > 0) {
@@ -33,5 +49,6 @@
             }
         </div>
         }
+
     </section>
 </div>

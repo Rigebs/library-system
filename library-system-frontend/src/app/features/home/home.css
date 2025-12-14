@@ -115,25 +115,82 @@
   margin-bottom: 1.5rem;
 }
 
+/* --- ESTILOS DE ESTADOS --- */
+
+/* Base para mensajes */
 .loading-message,
-.error-message,
-.no-books-message {
+.error-message {
   padding: 1rem;
   border-radius: 4px;
   text-align: center;
   margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 1.1rem;
+  font-weight: 500;
 }
 
+/* 1. ESTILO CARGANDO */
 .loading-message {
-  background-color: #e0f7fa;
-  color: #006064;
+  background-color: #e0f2fe; /* Azul muy claro */
+  color: #0c4a6e; /* Azul oscuro */
+  border: 1px solid #93c5fd;
 }
 
+/* Animación de rotación para el icono de carga */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.icon-loading {
+  animation: spin 1s linear infinite;
+}
+
+/* 2. ESTILO ERROR */
 .error-message {
   background-color: #fee2e2;
   color: #991b1b;
   font-weight: bold;
   border: 1px solid #fca5a5;
+}
+
+/* 3. ESTILO NO RESULTADOS (Sección separada para más diseño) */
+.no-results-message {
+  background-color: #f7f8fa; /* Fondo suave para el bloque de no resultados */
+  padding: 40px 20px;
+  border-radius: 8px;
+  text-align: center;
+  margin: 30px auto;
+  max-width: 500px;
+  border: 1px dashed #d1d5db;
+}
+
+.no-results-message h3 {
+  color: #4b5563;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.no-results-message p {
+  color: #6b7280;
+  margin-bottom: 5px;
+}
+
+.icon-no-results {
+  margin-bottom: 15px;
+  filter: opacity(0.5); /* Icono más suave */
+}
+
+.suggestion {
+  margin-top: 20px !important;
+  font-size: 0.95rem;
 }
 
 .book-list {

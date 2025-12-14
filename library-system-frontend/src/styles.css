@@ -61,10 +61,6 @@ button:disabled {
   box-shadow: none;
 }
 
-.form-group {
-  margin-bottom: 12px;
-}
-
 .icon {
   width: 16px;
   height: 16px;
@@ -91,23 +87,7 @@ button {
 label {
   display: block;
   font-weight: 500;
-  margin-bottom: 8px;
   color: #475569;
-}
-
-input[type='text'],
-input[type='email'],
-input[type='password'],
-input[type='number'],
-select,
-textarea {
-  width: 100%;
-  padding: 12px 15px;
-  border: 1px solid #cbd5e1;
-  border-radius: 6px;
-  font-size: 1rem;
-  color: #1e293b;
-  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 input:focus,
@@ -115,7 +95,6 @@ select:focus,
 textarea:focus {
   border-color: #0070f3;
   outline: none;
-  box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.1);
 }
 
 input.ng-invalid.ng-touched,
