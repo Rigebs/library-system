@@ -19,11 +19,23 @@ public class BookController {
     private final BookService bookService;
 
     @GetMapping
-    public ResponseEntity<ApiResponse<List<BookResponse>>> getAllBooks() {
-        List<BookResponse> books = bookService.findAllBooks();
-        return ResponseEntity.ok(
-                ApiResponse.success(books, "Book list retrieved successfully")
-        );
+    public ResponseEntity<ApiResponse<List<BookResponse>>> getAllBooks(
+            @RequestParam(required = false) String term,
+            @RequestParam(required = false, defaultValue = "all") String field
+    ) {
+        List<BookResponse> books;
+
+        if (term != null && !term.trim().isEmpty()) {
+            books = bookService.searchBooks(term, field);
+            return ResponseEntity.ok(
+                    ApiResponse.success(books, "Search results retrieved successfully")
+            );
+        } else {
+            books = bookService.findAllBooks();
+            return ResponseEntity.ok(
+                    ApiResponse.success(books, "Book list retrieved successfully")
+            );
+        }
     }
 
     @GetMapping("/{id}")

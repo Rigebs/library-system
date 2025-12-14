@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface BookService {
     List<BookResponse> findAllBooks();
+    List<BookResponse> searchBooks(String term, String field);
     BookResponse findBookById(Long id);
     BookResponse saveBook(BookRequest request);
     BookResponse updateBook(Long id, BookRequest request);

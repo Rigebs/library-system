@@ -10,7 +10,9 @@ import com.rige.repositories.BookRepository;
 import com.rige.repositories.CategoryRepository;
 import com.rige.repositories.LoanRepository;
 import com.rige.services.BookService;
+import com.rige.specifications.BookSpecification;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,6 +29,17 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<BookResponse> findAllBooks() {
         return bookRepository.findAll().stream()
+                .map(bookMapper::toResponse)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<BookResponse> searchBooks(String term, String field) {
+        Specification<BookEntity> spec = BookSpecification.hasKeyword(term, field);
+
+        List<BookEntity> results = bookRepository.findAll(spec);
+
+        return results.stream()
                 .map(bookMapper::toResponse)
                 .collect(Collectors.toList());
     }
