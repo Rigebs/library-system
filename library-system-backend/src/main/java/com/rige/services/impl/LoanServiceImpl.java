@@ -12,6 +12,7 @@ import com.rige.repositories.LoanRepository;
 import com.rige.repositories.UserRepository;
 import com.rige.services.LoanService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -101,5 +102,27 @@ public class LoanServiceImpl implements LoanService {
 
         LoanEntity returnedLoan = loanRepository.save(loan);
         return loanMapper.toResponse(returnedLoan);
+    }
+
+    @Scheduled(cron = "0 0 * * * *")
+    @Transactional
+    public void processAutoReturns() {
+        LocalDateTime now = LocalDateTime.now();
+
+        List<LoanEntity> loansToReturn = loanRepository
+                .findByStatusAndExpectedReturnDateBefore(LoanStatus.ACTIVE, now);
+
+        if (loansToReturn.isEmpty()) {
+            return;
+        }
+
+        for (LoanEntity loan : loansToReturn) {
+
+            loan.setActualReturnDate(now);
+            loan.setStatus(LoanStatus.RETURNED);
+
+        }
+
+        loanRepository.saveAll(loansToReturn);
     }
 }

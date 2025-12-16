@@ -6,6 +6,8 @@ import org.jspecify.annotations.NonNull;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,4 +37,6 @@ public interface LoanRepository extends JpaRepository<LoanEntity, Long> {
     @NonNull
     @EntityGraph(attributePaths = {"user", "book"})
     Optional<LoanEntity> findById(@NonNull Long id);
+
+    List<LoanEntity> findByStatusAndExpectedReturnDateBefore(LoanStatus status, LocalDateTime dateTime);
 }
