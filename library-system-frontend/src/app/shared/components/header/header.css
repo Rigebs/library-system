@@ -155,39 +155,13 @@
 
 /* --- RESPONSIVIDAD (HEADER Y BÚSQUEDA) --- */
 @media (max-width: 900px) {
-  /* HEADER */
+  /* HEADER BASE */
   .app-header {
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     padding: 10px 15px;
     gap: 10px;
     align-items: center;
-  }
-
-  .mobile-controls {
-    display: flex;
-    gap: 5px;
-    order: 3;
-    align-items: center;
-  }
-
-  .icon-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 8px;
-    transition: all 0.2s ease-in-out;
-    border-radius: 50%;
-  }
-
-  .icon-btn img {
-    width: 24px;
-    height: 24px;
-    vertical-align: middle;
-    transition: transform 0.3s ease-in-out;
-  }
-
-  .actions.mobile-visible {
-    gap: 10px;
+    height: auto;
   }
 
   .logo-wrapper {
@@ -195,6 +169,47 @@
     margin-right: auto;
   }
 
+  .mobile-controls {
+    display: flex;
+    gap: 5px;
+    order: 2;
+    align-items: center;
+  }
+
+  /* ESTADO BASE DE MOBILE (OCULTOS) */
+  .search-wrapper,
+  .actions {
+    display: block; /* Debe ser block para que max-height funcione */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    background-color: #ffffff;
+    z-index: 99;
+    overflow: hidden; /* Importante para la transición */
+    max-height: 0; /* Oculto por defecto, con animación */
+    transition: max-height 0.3s ease-in-out;
+  }
+
+  /* ESTADO ACTIVO DE MOBILE (VISIBLES) */
+  .search-wrapper.mobile-visible {
+    max-height: 100px; /* Suficiente para el buscador */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    padding: 10px 15px;
+  }
+
+  .actions.mobile-visible {
+    max-height: 400px; /* Suficiente para el menú de usuario/login */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  /* AJUSTES INTERNOS PARA EL MENÚ DE ACCIONES MÓVIL */
   .actions.mobile-visible .user-menu-container {
     position: static;
     width: 100%;
@@ -232,6 +247,25 @@
   .actions.mobile-visible .btn-login {
     width: 100%;
     text-align: center;
+    margin-bottom: 10px;
+    padding: 15px 15px;
+  }
+
+  /* BOTONES DE CONTROL MÓVIL */
+  .icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    transition: all 0.2s ease-in-out;
+    border-radius: 50%;
+  }
+
+  .icon-btn img {
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+    transition: transform 0.3s ease-in-out;
   }
 
   .search-toggle.is-active {
@@ -250,7 +284,11 @@
     transform: rotate(90deg);
   }
 
-  /* BÚSQUEDA */
+  .user-menu-container {
+    display: none;
+  }
+
+  /* BÚSQUEDA EN PANTALLAS EXTRA PEQUEÑAS */
   @media (max-width: 600px) {
     .search-form {
       flex-wrap: wrap;

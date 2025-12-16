@@ -1,53 +1,21 @@
-<div class="container book-detail-container">
+<div class="book-detail-page">
     @if (isLoading()) {
-    <p>Cargando detalles del libro...</p>
+    <p class="loading-message">Cargando detalles del libro...</p>
     } @else if (book()) {
-    <div class="detail-card">
-        <div class="cover-section">
-            <img src="{{ book()!.coverUrl }}" alt="Portada de {{ book()!.title }}" width="250" height="375" priority />
-            <div class="actions">
-                <button class="btn-borrow" [disabled]="book()!.availableQuantity === 0 || isBorrowing()"
-                    (click)="onBorrow()">
-                    @if (isBorrowing()) {
-                    Solicitando...
-                    } @else {
-                    Solicitar Préstamo Digital (RF3.1)
-                    }
-                </button>
-                <div class="availability-status">
-                    <span [class.available]="book()!.availableQuantity > 0"
-                        [class.unavailable]="book()!.availableQuantity === 0">
-                        {{ book()!.availableQuantity > 0 ? 'Disponible' : 'Agotado' }}
-                    </span>
-                    ({{ book()!.availableQuantity }} copias)
-                </div>
-            </div>
-        </div>
+    <app-book-summary [book]="book()!" (borrowBook)="onBorrow()" [isBorrowing]="isBorrowing()" />
 
-        <div class="info-section">
-            <h2>{{ book()!.title }}</h2>
-            <p class="author-category">
-                Por <strong>{{ book()!.author }}</strong> en <span>{{ book()!.category }}</span>
-            </p>
+    <hr class="section-divider">
 
-            <div class="rating-info">
-                ⭐ {{ book()!.rating | number:'1.1-1' }} (Basado en 15 ratings)
-            </div>
+    <app-review-form (reviewSubmitted)="onSubmitReview($event)" />
 
-            <hr>
+    <hr class="section-divider">
 
-            <h3>Resumen</h3>
-            <p>{{ book()!.summary }}</p>
-
-            <h3 class="mt-20">Detalles</h3>
-            <div class="details-grid">
-                <div><strong>ISBN:</strong> {{ book()!.isbn }}</div>
-                <div><strong>Editorial:</strong> {{ book()!.editorial }}</div>
-                <div><strong>Stock Total:</strong> {{ book()!.totalQuantity }}</div>
-            </div>
-
-        </div>
+    <h2 class="section-title">Comentarios de Otros Usuarios</h2>
+    <div class="comment-list">
+        <div class="comment-item">...</div>
+        <div class="comment-item">...</div>
     </div>
+
     } @else {
     <div class="alert alert-error">Libro no encontrado.</div>
     }

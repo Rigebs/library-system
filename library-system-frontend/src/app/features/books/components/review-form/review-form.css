@@ -1,0 +1,134 @@
+/* --- Sección de Calificación y Comentarios --- */
+.reviews-section {
+  padding-bottom: 30px;
+}
+
+.review-form {
+  padding: 20px 0;
+}
+
+.rating-input {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.rating-label {
+  font-weight: 600;
+  color: #1e293b;
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.stars-input {
+  display: flex;
+  align-items: center;
+  line-height: 1;
+  gap: 10px;
+}
+
+.stars-input .star-icon {
+  font-size: 2.5rem;
+  line-height: 1;
+  cursor: pointer;
+  color: #cbd5e1;
+  transition: color 0.1s;
+}
+
+.stars-input .star-icon.filled {
+  color: #f59e0b;
+}
+
+.stars-input .star-icon:hover ~ .star-icon {
+  color: #cbd5e1;
+}
+
+.stars-input .star-icon:hover {
+  color: #f59e0b;
+}
+
+.comment-input {
+  margin-bottom: 20px;
+}
+
+.comment-input label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #1e293b;
+}
+
+.comment-input textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  resize: vertical;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.btn-submit-review {
+  background-color: #059669;
+  width: auto;
+  padding: 10px 25px;
+  margin-top: 10px;
+}
+
+.btn-submit-review:hover:not([disabled]) {
+  background-color: #047857;
+}
+
+.btn-submit-review:disabled {
+  background-color: #a7f3d0;
+}
+
+/* Comentarios de otros usuarios */
+.comment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.comment-item {
+  padding: 20px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  border-bottom: 1px dashed #f1f5f9;
+  padding-bottom: 5px;
+}
+
+.comment-header strong {
+  color: #1e293b;
+  font-size: 1.05rem;
+}
+
+.comment-rating {
+  color: #f59e0b;
+  font-size: 1.2rem;
+}
+
+.comment-item p {
+  margin: 0;
+  color: #475569;
+  line-height: 1.6;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .rating-input {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}

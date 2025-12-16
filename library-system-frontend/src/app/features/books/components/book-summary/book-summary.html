@@ -1,0 +1,62 @@
+<section class="main-book-section">
+    <div class="cover-and-actions">
+        <img [src]="book()!.coverUrl" [alt]="'Portada de ' + book()!.title" class="book-cover" />
+
+        <div class="actions">
+            <button class="btn-primary btn-borrow" [disabled]="book()!.availableQuantity === 0 || isBorrowing()"
+                (click)="borrowBook.emit()">
+                @if (isBorrowing()) {
+                Solicitando...
+                } @else {
+                Solicitar Préstamo Digital (RF3.1)
+                }
+            </button>
+
+            <div class="availability-status">
+                <span [class.available]="book()!.availableQuantity > 0"
+                    [class.unavailable]="book()!.availableQuantity === 0">
+                    {{ book()!.availableQuantity > 0 ? 'Disponible' : 'Agotado' }}
+                </span>
+                ({{ book()!.availableQuantity }} copias disponibles)
+            </div>
+        </div>
+    </div>
+
+    <div class="book-info-summary">
+        <h1 class="book-title">{{ book()!.title }}</h1>
+
+        <p class="author-category">
+            Por <strong>{{ book()!.author }}</strong> · <span>{{ book()!.category.name }}</span>
+        </p>
+
+        <div class="rating-summary">
+            <span class="star-rating-icon">★</span>
+            <span class="rating-value">{{ book()!.rating | number:'1.1-1' }}</span>
+            <span class="rating-count">(15 reseñas)</span>
+        </div>
+
+        <section class="book-section">
+            <h2 class="section-title">Resumen</h2>
+            <p class="summary-text">{{ book()!.summary }}</p>
+        </section>
+
+        <section class="book-section">
+            <h2 class="section-title">Detalles del libro</h2>
+            <ul class="details-list">
+                <li>
+                    <span>ISBN</span>
+                    <strong>{{ book()!.isbn }}</strong>
+                </li>
+                <li>
+                    <span>Editorial</span>
+                    <strong>{{ book()!.editorial }}</strong>
+                </li>
+                <li>
+                    <span>Stock total</span>
+                    <strong>{{ book()!.totalQuantity }}</strong>
+                </li>
+            </ul>
+        </section>
+    </div>
+
+</section>

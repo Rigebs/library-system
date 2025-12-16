@@ -1,0 +1,29 @@
+<h2 class="section-title">Califica y Comenta</h2>
+
+<div class="review-form" [formGroup]="form">
+
+    <div class="rating-input">
+        <span class="rating-label">Tu Calificación:</span>
+
+        <div class="stars-input">
+            @for (i of [1, 2, 3, 4, 5]; track i) {
+            <span class="star-icon" [class.filled]="currentRating() >= i" (click)="setRating(i)">
+                ★
+            </span>
+            }
+        </div>
+    </div>
+
+    <div class="comment-input">
+        <label for="review">Escribe tu comentario:</label>
+
+        <textarea id="review" rows="4" formControlName="reviewText" placeholder="¿Qué te pareció este libro?">
+    </textarea>
+    </div>
+
+    <button class="btn-primary btn-submit-review" [disabled]="currentRating() === 0 || form.invalid"
+        (click)="submitReview()">
+        Enviar Calificación y Comentario
+    </button>
+
+</div>
